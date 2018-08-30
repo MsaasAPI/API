@@ -1,7 +1,7 @@
 # MSaaS API Sample App for Postman.
 
-| [Why Postman](#why-postman) | [Conceptual documentation](https://github.com/MsaasAPI/Postman/wiki) | [References](https://github.com/MsaasAPI/API/wiki/References)
-| --- | --- | --- |
+| [Why Postman](#why-postman) | [Get Started](https://github.com/MsaasAPI/API/wiki/Get-started-with-Postman-to-Access-MSaaS-API) | [Run Scenarios](https://github.com/MsaasAPI/API/wiki/Run-Postman-Scenarios) | [References](https://github.com/MsaasAPI/API/wiki/References)
+| --- | --- | --- | --- |
 
 Postman is a popular API testing tool, and it is no exception for MSaaS API client implementation. Experience suggests that extra time investment in Postman can familiarize partner with the MSaaS API, flatten the learning curve, alleviate confusion, and facilitate trouble-shooting. It is our hope the readers find Postman helpful in the on-boarding process. 
 
