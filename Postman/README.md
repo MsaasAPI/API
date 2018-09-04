@@ -10,7 +10,7 @@ Although the overhead effort on Postman will not likely become part of the tangi
 + Quick prototyping: No heavy-duty IDE is needed. Just provision the parameters and leave the lower-level plumbing to Postman. Some lines of JavaScript will be needed only if advanced customization is desired.
 + Fault isolation: Decouple the client application from the trouble-shooting process, and therefore enable the user to pingpoint other issues such as the configuration and network.
 + Lower technical requirement: Although JavaScript literacy is advisible, it requires no programming knowledge to make basic API calls. This enable non-technical members (PM, analyst, agent, etc) to conduct preliminary support or testing.
-+ Not but least, its UX is more friendly than intimidating comparing to other common competitors.
++ Last but not least, its UX is more friendly than intimidating comparing to other common competitors.
 
 ## License
 Copyright (c) Microsoft Corporation.  All rights reserved. Licensed under the MIT License (the "License");
