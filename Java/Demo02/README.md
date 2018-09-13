@@ -1,4 +1,4 @@
-# MSaaS API Sample App for Java - Demo01.
+# MSaaS API Sample App for Java - Demo02.
 
 | [References](https://github.com/MsaasAPI/API/wiki/References) | [License](https://github.com/MsaasAPI/API/blob/master/Java/Demo02/LICENSE)
 | --- | --- |
