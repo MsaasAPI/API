@@ -30,7 +30,7 @@
             "name": "Debug (Attach)",
             "request": "attach",
             "hostName": "localhost",
-            "port": "<debug port of remote debuggee>"
+            "port": 12345
         }
     ]
 }
