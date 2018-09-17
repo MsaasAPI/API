@@ -16,12 +16,12 @@
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-App<caseapijavademo01>",
+            "name": "Debug (Launch)-Program<caseapijavademo01>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "console": "externalTerminal",
             "stopOnEntry": false,
-            "mainClass": "com.contoso.caseapijavademo01.App",
+            "mainClass": "com.contoso.caseapijavademo01.Program",
             "args": "",
             "projectName": "caseapijavademo01"
         },
