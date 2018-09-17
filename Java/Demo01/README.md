@@ -1,7 +1,7 @@
 # MSaaS API Sample App for Java - Demo01.
 
-| [References](https://github.com/MsaasAPI/API/wiki/References) | [License](https://github.com/MsaasAPI/API/blob/master/Java/Demo01/LICENSE)
-| --- | --- |
+| [References](https://github.com/MsaasAPI/API/wiki/References) | [Dependency](https://github.com/AzureAD/azure-activedirectory-library-for-java) | [License](https://github.com/MsaasAPI/API/blob/master/Java/Demo01/LICENSE)
+| --- | --- | --- |
 
 This is a barebone project.
 
