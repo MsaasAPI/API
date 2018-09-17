@@ -9,7 +9,7 @@
             "name": "Debug (Launch)",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "stopOnEntry": false,
             "mainClass": "",
             "args": ""
@@ -19,7 +19,7 @@
             "name": "Debug (Launch)-App<caseapijavademo01>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "stopOnEntry": false,
             "mainClass": "com.contoso.caseapijavademo01.App",
             "args": "",
