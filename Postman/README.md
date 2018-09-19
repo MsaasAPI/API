@@ -1,4 +1,4 @@
-# MSaaS API Sample App for Postman.
+# MSaaS API Sample App for Postman
 
 | [Why Postman](https://github.com/MsaasAPI/API/wiki/Why-Postman-during-Case-API-Application-Implementation%3F) | [Sample Collection](https://github.com/MsaasAPI/API/blob/master/Postman/MsaasApiCollection.json) | [Get Started](https://github.com/MsaasAPI/API/wiki/Get-started-with-Postman-to-Access-MSaaS-API) | [Run Partner Scenarios](https://github.com/MsaasAPI/API/wiki/Run-Postman---Partner-Scenarios) | [References](https://github.com/MsaasAPI/API/wiki/References) | [License](https://github.com/MsaasAPI/API/blob/master/Postman/LICENSE)
 | --- | --- | --- | --- | --- | --- |
