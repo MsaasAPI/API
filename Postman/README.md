@@ -3,7 +3,7 @@
 | [Why Postman](https://github.com/MsaasAPI/API/wiki/Why-Postman-during-Case-API-Application-Implementation%3F) | [Sample Collection](https://github.com/MsaasAPI/API/blob/master/Postman/MsaasApiCollection.json) | [Get Started](https://github.com/MsaasAPI/API/wiki/Get-started-with-Postman-to-Access-MSaaS-API) | [Run Partner Scenarios](https://github.com/MsaasAPI/API/wiki/Run-Postman---Partner-Scenarios) | [References](https://github.com/MsaasAPI/API/wiki/References) | [License](https://github.com/MsaasAPI/API/blob/master/Postman/LICENSE)
 | --- | --- | --- | --- | --- | --- |
 
-Postman is a popular API testing tool, and it is no exception for MSaaS API client implementation. Experience suggests that extra time investment in Postman can familiarize partner with the MSaaS API, flatten the learning curve, alleviate confusion, and facilitate trouble-shooting. It is our hope the readers find Postman helpful in the on-boarding process. 
+Postman is a popular API testing tool, and it is no exception for MSaaS Case API client implementation. Experience suggests that extra time investment in Postman can familiarize partner with the MSaaS API, flatten the learning curve, alleviate confusion, and facilitate trouble-shooting. It is our hope the readers find Postman helpful in the on-boarding process. 
 
 ## License
 Copyright (c) Microsoft Corporation.  All rights reserved. Licensed under the MIT License (the "License");
