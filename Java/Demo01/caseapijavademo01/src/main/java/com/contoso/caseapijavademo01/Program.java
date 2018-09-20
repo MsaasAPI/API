@@ -3,7 +3,7 @@ package com.contoso.caseapijavademo01;
 import java.io.FileInputStream;
 import java.security.*;
 import java.security.cert.X509Certificate;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import com.microsoft.aad.adal4j.*;
 
 /**
@@ -37,7 +37,7 @@ public class Program {
     public static void main(String[] args) {
         System.out.println("Hello World!");
         // SetPayloads();
-        // GetRequestToken();
+        GetRequestToken();
         System.exit(0);
     }
 
@@ -51,13 +51,11 @@ public class Program {
 
             X509Certificate cert = (X509Certificate) keyStore.getCertificate(ALIAS_IN_KEY_STORE);
             PrivateKey key = (PrivateKey) keyStore.getKey(ALIAS_IN_KEY_STORE, KEY_STORE_PASSWORD.toCharArray());
-            // AsymmetricKeyCredential asymmetricKeyCredential = AsymmetricKeyCredential.create(CLIENT_ID_CERT, key, cert);
-            // AuthenticationContext authContext = new AuthenticationContext(AUTHORITY, false,
-            //         Executors.newSingleThreadExecutor());
-            // Future<AuthenticationResult> authResultAsync = authContext.acquireToken(RESOURCE, asymmetricKeyCredential,
-            //         null);
-            // AuthenticationResult authResult = authResultAsync.get();
-            // _token = "Bearer " + authResult.getAccessToken();
+            AsymmetricKeyCredential asymmetricKeyCredential = AsymmetricKeyCredential.create(CLIENT_ID_CERT, key, cert);
+            AuthenticationContext authContext = new AuthenticationContext(AUTHORITY, false, Executors.newSingleThreadExecutor());
+            Future<AuthenticationResult> authResultAsync = authContext.acquireToken(RESOURCE, asymmetricKeyCredential, null);
+            AuthenticationResult authResult = authResultAsync.get();
+            _token = "Bearer " + authResult.getAccessToken();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
