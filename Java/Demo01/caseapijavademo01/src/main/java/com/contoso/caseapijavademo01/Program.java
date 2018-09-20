@@ -3,6 +3,7 @@ package com.contoso.caseapijavademo01;
 import java.io.FileInputStream;
 import java.security.*;
 import java.security.cert.X509Certificate;
+import java.util.*;
 import java.util.concurrent.*;
 import com.microsoft.aad.adal4j.*;
 
@@ -36,7 +37,7 @@ public class Program {
     private static final Integer TIME_DELAY = 1000;
     // private static final Random _random = new Random(new Date().getTime());
     // private static final Map<Attr, String> _payloads = new HashMap<Attr, String>(); // Contains data (resources and payloads) required per https://msegksdev.trafficmanager.net/swagger/ui/index?sapId=2e12ea69-0884-9b66-8431-13094bcbe81e#/Cases.
-    // private static final Map<Attr, String> _caches = new HashMap<Attr, String>(); // Contains HTTP request and repsonse data associated with the most recent transaction. Subject to overwrite by subsequent transactions.
+    private static final Map<Attr, String> _caches = new HashMap<Attr, String>(); // Contains HTTP request and repsonse data associated with the most recent transaction. Subject to overwrite by subsequent transactions.
     private static String _token = "";
 
     public static void main(String[] args) {
@@ -89,7 +90,7 @@ public class Program {
                 try{
                     HttpResponse response = httpClient.execute(request);
                     // CacheTransaction(request, response);
-                    // ValidateStatusCode();
+                    ValidateStatusCode();
                     return;
                 } catch (Exception e) {
                     PrintRetryError(retryCounter, e);
@@ -101,6 +102,40 @@ public class Program {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
         }
+    }
+
+    private static void ValidateStatusCode() throws HttpException{
+        List<String> okHttpCodes = List.of("200", "201", "204");
+
+        if(!okHttpCodes.contains(_caches.get(Attr.HTTP_RESPONSE_STATUS_CODE))){
+            throw new HttpException("HTTP request was not successful: \r"
+                                        + _caches.get(Attr.HTTP_REQUEST) + "\r"
+                                        + _caches.get(Attr.HTTP_RESPONSE_STATUS_CODE) + "\r"
+                                        + _caches.get(Attr.HTTP_RESPONSE_STATUS_REASON) + "\r"
+                                        + _caches.get(Attr.HTTP_RESPONSE_BODY) + "\r");
+        }
+    }
+
+    private enum Attr {
+        CASE_NUMBER,
+        CASE_PAYLOAD,
+        CONTACT_ID_GUID,
+        CONTACT_PAYLOAD,
+        CUSTOMERS,
+        CUSTOMER_ID_GUID,
+        ENTIRE_CASE,
+        NEWEST_CONTACT,
+        NOTE_PAYLOAD,
+        PARTNER_CASE_REFERENCES_ID_GUID,
+        PARTNER_CASE_REFERENCES_AGENT_PAYLOAD,
+        PARTNER_CASE_REFERENCES_CASE_STATE_PAYLOAD,
+        PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD,
+        PARTNER_CASE_REFERENCESS,
+        NOTES,
+        HTTP_REQUEST,
+        HTTP_RESPONSE_STATUS_CODE,
+        HTTP_RESPONSE_STATUS_REASON,
+        HTTP_RESPONSE_BODY
     }
 
     private static void PrintRetryError(Integer retryCounter, Exception e){
