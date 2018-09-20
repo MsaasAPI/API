@@ -1,6 +1,9 @@
 package com.contoso.caseapijavademo01;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.security.*;
 import java.security.cert.X509Certificate;
 import java.util.*;
@@ -8,7 +11,8 @@ import java.util.concurrent.*;
 import com.microsoft.aad.adal4j.*;
 
 import org.apache.http.*;
-import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.client.methods.*;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
 import org.apache.log4j.BasicConfigurator;
 
@@ -84,12 +88,12 @@ public class Program {
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
             Integer retryCounter = 0;
-            // AddMetaDataToHttpRequest(request, url, payload, publishEventToSelf);
+            AddMetaDataToHttpRequest(request, url, payload, publishEventToSelf);
 
             while(true){
                 try{
                     HttpResponse response = httpClient.execute(request);
-                    // CacheTransaction(request, response);
+                    CacheTransaction(request, response);
                     ValidateStatusCode();
                     return;
                 } catch (Exception e) {
@@ -101,6 +105,48 @@ public class Program {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
+        }
+    }
+
+    private static void AddMetaDataToHttpRequest(HttpRequestBase request, String url, String payload, boolean publishEventToSelf){
+        try{
+            request.setURI(new URI(url));
+            request.addHeader("Authorization", _token);
+
+            if (request.getMethod() != "GET") { // GET requests need no payload
+                StringEntity entity = new StringEntity(payload, "utf-8");
+                entity.setContentType("application/json");
+                ((HttpEntityEnclosingRequestBase) request).setEntity(entity);
+           }
+
+            if (publishEventToSelf) { // Only applicable to POST Note, POST Contact, PATCH Contact, or PATCH PartnerCaseReference
+                request.addHeader("test-mseg", "{\'SelfNotification\':\'true\'}");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n\n\n\n");
+        }
+    }
+
+    private static void CacheTransaction(HttpRequestBase request, HttpResponse response){
+        try {
+            _caches.put(Attr.HTTP_REQUEST, request.toString());
+            _caches.put(Attr.HTTP_RESPONSE_STATUS_CODE, Integer.toString(response.getStatusLine().getStatusCode()));
+            _caches.put(Attr.HTTP_RESPONSE_STATUS_REASON, response.getStatusLine().getReasonPhrase());
+
+            if(response.getEntity() == null) // PATCH requests return no entity
+                return;
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            String buffer = "";
+            String responseBody = "";
+            while ((buffer = bufferedReader.readLine()) != null) {
+                responseBody += buffer + "\n";
+            }
+            _caches.put(Attr.HTTP_RESPONSE_BODY, responseBody);
+        } catch (Exception e) {
+            e.printStackTrace();
+           System.out.println(e.getMessage() + "\n\n\n\n");
         }
     }
 
