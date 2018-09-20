@@ -6,6 +6,8 @@ import java.security.cert.X509Certificate;
 import java.util.concurrent.*;
 import com.microsoft.aad.adal4j.*;
 
+import org.apache.log4j.BasicConfigurator;
+
 /**
  * Hello world!
  *
@@ -35,6 +37,7 @@ public class Program {
     private static String _token = "";
 
     public static void main(String[] args) {
+        BasicConfigurator.configure();
         System.out.println("Hello World!");
         // SetPayloads();
         GetRequestToken();
