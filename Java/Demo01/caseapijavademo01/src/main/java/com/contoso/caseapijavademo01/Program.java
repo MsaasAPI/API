@@ -6,6 +6,7 @@ import java.security.cert.X509Certificate;
 import java.util.concurrent.*;
 import com.microsoft.aad.adal4j.*;
 
+import org.apache.http.*;
 import org.apache.log4j.BasicConfigurator;
 
 /**
