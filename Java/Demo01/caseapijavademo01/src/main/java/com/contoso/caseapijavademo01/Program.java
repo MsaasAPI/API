@@ -7,6 +7,8 @@ import java.util.concurrent.*;
 import com.microsoft.aad.adal4j.*;
 
 import org.apache.http.*;
+import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.impl.client.*;
 import org.apache.log4j.BasicConfigurator;
 
 /**
@@ -17,7 +19,7 @@ public class Program {
     /***** USER CONFIGURABLE FIELDS *****/
     // private static final String PARTNER_NAME = "FJ";
     // private static final String LOG_FOLDER = "Logs/";
-    // private static final Integer MAX_RETRIES = 3;
+    private static final Integer MAX_RETRIES = 3;
     
     /***** CREDENTIALS *****/
     private static final String CLIENT_ID_CERT = "c6bee0f5-1a60-4d25-8629-b0bdd8e4ce2e";
@@ -31,7 +33,7 @@ public class Program {
     // private static final String BASE_URI = "https://api-ppe.support.microsoft.com/v1/cases";
     // private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy_MMdd_HHmm");
     // private static final String LOG_NAME = "log_" + DATE_FORMATTER.format(new Date()) + ".txt";
-    // private static final Integer TIME_DELAY = 1000;
+    private static final Integer TIME_DELAY = 1000;
     // private static final Random _random = new Random(new Date().getTime());
     // private static final Map<Attr, String> _payloads = new HashMap<Attr, String>(); // Contains data (resources and payloads) required per https://msegksdev.trafficmanager.net/swagger/ui/index?sapId=2e12ea69-0884-9b66-8431-13094bcbe81e#/Cases.
     // private static final Map<Attr, String> _caches = new HashMap<Attr, String>(); // Contains HTTP request and repsonse data associated with the most recent transaction. Subject to overwrite by subsequent transactions.
@@ -74,6 +76,39 @@ public class Program {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
+        }
+    }
+
+    private static void MakeRequest(HttpRequestBase request, String url, String payload, boolean publishEventToSelf) {
+        try {
+            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+            Integer retryCounter = 0;
+            // AddMetaDataToHttpRequest(request, url, payload, publishEventToSelf);
+
+            while(true){
+                try{
+                    HttpResponse response = httpClient.execute(request);
+                    // CacheTransaction(request, response);
+                    // ValidateStatusCode();
+                    return;
+                } catch (Exception e) {
+                    PrintRetryError(retryCounter, e);
+                    Thread.sleep(TIME_DELAY);
+                    retryCounter++;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n\n\n\n");
+        }
+    }
+
+    private static void PrintRetryError(Integer retryCounter, Exception e){
+        System.out.println("FAILED - Command failed on retry " + retryCounter + " of " + MAX_RETRIES + " error: " + e);
+
+        if (retryCounter >= MAX_RETRIES) {
+            System.out.println("Max retries exceeded.");
+            System.exit(1);
         }
     }
 }
