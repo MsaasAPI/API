@@ -41,6 +41,17 @@ public class Program {
         System.exit(0);
     }
 
+    /**
+     * Acquires Bearer Token (valid for one hour) from the authorization server per https://tools.ietf.org/html/rfc6750.
+     * <p>Per RFC 6750, "Any party in possession of a bearer token (a "bearer") can use it to get access to the associated resources (without demonstrating possession of a cryptographic key). To prevent misuse, bearer tokens need to be protected from disclosure in storage and in transport."
+     * <p>Therefore, the following security recommendations are essential to safe-guard the bear tokens:
+     * <p>- Validate TLS certificate chains to avoid DNS hijacking.
+     * <p>- Always use TLS (https) to avoid token expossure to numerous attacks.
+     * <p>- Don't store bearer tokens in cookies to avoid Cross-site request forgery.
+     * <p>- Don't pass bearer tokens in page URLs (ie, as query string parameters) to avoid stealing from the history data, logs, or other unsecured locations.
+     * 
+     * @return  None. Acquired bearer token is assigned to global variable _token for all subsequent HTTP requests behind the scene.
+     */
     private static void GetRequestToken() {
         try {
             KeyStore keyStore = KeyStore.getInstance("JKS");
