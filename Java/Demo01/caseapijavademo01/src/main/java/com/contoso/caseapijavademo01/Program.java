@@ -84,6 +84,16 @@ public class Program {
         }
     }
 
+    /**
+     * Makes HTTP request to the Automated Case Exchange (ACE) with up to MAX_RETRIES retries.
+     * 
+     * @param  request            type of HTTP request (GET, POST, PATCH in the context of ACE).
+     * @param  url                complete path (including base domain and path) to ACE service.
+     * @param  payload            request body sent to ACE.
+     * @param  publishEventToSelf flag specifying whether to publish Service Bus event to self (POST and PATCH only).
+     * 
+     * @return  None. Associated transaction data (request and response) is cached in _caches for immediate subsequent processing.
+     */
     private static void MakeRequest(HttpRequestBase request, String url, String payload, boolean publishEventToSelf) {
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -108,6 +118,15 @@ public class Program {
         }
     }
 
+    /**
+     * <p>Assigns headers, payload to HTTP request.
+     * <p>**CAUTION** DO NOT use SelfNotification header in Production code.
+     * 
+     * @param  request            type of HTTP request (GET, POST, PATCH in the context of ACE).
+     * @param  url                complete path (including base domain and path) to ACE service.
+     * @param  payload            request body sent to ACE.
+     * @param  publishEventToSelf boolean flag specifying whether to publish said HTTP request back to sender (partner self) via Service Bus events. Applicable to POST and PATCH requests only.
+     */
     private static void AddMetaDataToHttpRequest(HttpRequestBase request, String url, String payload, boolean publishEventToSelf){
         try{
             request.setURI(new URI(url));
@@ -128,6 +147,13 @@ public class Program {
         }
     }
 
+    /**
+     * <p>Saves most recent transaction request and response in _caches for immediate processing.
+     * <p>Note that Cached data will be overwritten by data from next transaction upon next round of caching.
+     * 
+     * @param  request  type of HTTP request (GET, POST, PATCH in the context of ACE).
+     * @param  response message responded by server after receiving and interpreting request.
+     */
     private static void CacheTransaction(HttpRequestBase request, HttpResponse response){
         try {
             _caches.put(Attr.HTTP_REQUEST, request.toString());
@@ -150,6 +176,13 @@ public class Program {
         }
     }
 
+    /**
+     * <p>Determines pass/fail of a given transaction per available Status Codes (https://www.ietf.org/rfc/rfc2616.txt).
+     * <p>200 OK:         an entity corresponding to the requested resource is sent in the response.
+     * <p>201 Created:    the request has been fulfilled and resulted in a new resource being created.
+     * <p>204 No Content: the server has fulfilled the request but does not need to return an entity-body.
+     * <p>If Status Code is not listed above, HTTP Exception will be thrown.
+     */
     private static void ValidateStatusCode() throws HttpException{
         List<String> okHttpCodes = List.of("200", "201", "204");
 
@@ -162,6 +195,9 @@ public class Program {
         }
     }
 
+    /**
+     * List of keys stored in the global map/dictionary _payloads.
+     */
     private enum Attr {
         CASE_NUMBER,
         CASE_PAYLOAD,
@@ -184,6 +220,12 @@ public class Program {
         HTTP_RESPONSE_BODY
     }
 
+    /**
+     * Print retry errors on console.
+     * 
+     * @param  retryCounter number of retries attmpted.
+     * @param  e            exception object.
+     */
     private static void PrintRetryError(Integer retryCounter, Exception e){
         System.out.println("FAILED - Command failed on retry " + retryCounter + " of " + MAX_RETRIES + " error: " + e);
 
