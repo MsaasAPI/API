@@ -229,7 +229,8 @@ public class Program {
                                                 Scenario115_ChangePartnerCaseReferencesPartnerCaseState(newCaseNumber, partnerCaseReferenceIdGuid);
                                                 Scenario120_CreateNote(newCaseNumber);
             AddRandomContactsToNewCase(newCaseNumber, defaultCustomerIdGuid);
-                                            } catch (Exception e) {
+            GetNewestContactFromNewCase(newCaseNumber);
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
         }
@@ -385,6 +386,47 @@ public class Program {
     }
 
     /**
+     * <p>Get newest Contact by:
+     * <p>- Makes GET: acquires casejson of the case.
+     * <p>- Parses the newest Contact in the default Customer by comparing CreatedOn timestamp.
+     * 
+     * @param  newCaseNumber numerical unique identifier of the created case.
+     * 
+     * @return  Newest Contact.
+     */
+    private static String GetNewestContactFromNewCase(String newCaseNumber){
+        try{
+            Run(Api.SCENARIO200_GET_CASE, newCaseNumber);
+
+            JSONObject caseJson = new JSONObject(_caches.get(Attr.HTTP_RESPONSE_BODY));
+            JSONObject defaultCustomer = (JSONObject)caseJson.getJSONArray("Customers").get(0); // Applicable to single-Customer cases only, which is true, for now.
+            JSONArray allContacts = defaultCustomer.getJSONArray("Contacts");
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date newestDate = f.parse(((JSONObject)allContacts.get(0)).getString("CreatedOn")); // Initially assign CreatedOn of first item as the newest (baseline).
+            String newestContact = allContacts.get(0).toString(); // Initially assign first item as the newest (baseline).
+            Date subjectDate = null;
+            
+            // Find the newest contact by iteratively identifying the newest CreatedOn date.
+            for (Iterator<Object> iterator = allContacts.iterator(); iterator.hasNext();) {
+                JSONObject c = (JSONObject)iterator.next();
+                subjectDate = f.parse(c.getString("CreatedOn"));
+                
+                if (subjectDate.compareTo(newestDate) > 0) {
+                    newestDate = subjectDate;
+                    newestContact = c.toString();
+                }
+            }
+
+            return newestContact;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n\n\n\n");
+        }
+
+        return "";
+   }
+
+   /**
      * <p>Assigns headers, payload to HTTP request.
      * <p>**CAUTION** DO NOT use SelfNotification header in Production code.
      * 
