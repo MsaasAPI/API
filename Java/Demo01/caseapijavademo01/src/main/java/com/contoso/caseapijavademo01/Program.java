@@ -52,6 +52,9 @@ public class Program {
         //--Scenario 100 Partner creates a new case. Empty string parameter is placeholder for caseNumber
         Run(Api.SCENARIO100_CREATE_CASE, "", _payloads.get(Attr.CASE_PAYLOAD));        
 
+        //--Scenario 110 Partner assigns or reassigns an agent
+        Run(Api.SCENARIO110_ASSIGN_REASSIGN_PARTNER_CASE_REFERENCES_AGENT, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_AGENT_PAYLOAD));
+
         //--Scenario 200 Partner gets a case
         Run(Api.SCENARIO200_GET_CASE, _payloads.get(Attr.CASE_NUMBER)); 
 
@@ -276,14 +279,14 @@ public class Program {
      * @return  None, since _payloads is a global variable.
      */
     private static void SetPayloads() {
-        _payloads.put(Attr.CASE_NUMBER, "118092114524635");
+        _payloads.put(Attr.CASE_NUMBER, "118092114524787");
         _payloads.put(Attr.CUSTOMER_ID_GUID, "4fc1f65e-d740-4385-a8e0-5c0d58b8374e");
         _payloads.put(Attr.CONTACT_ID_GUID, "aa743cf9-134c-4707-8df1-49d3c52a8c84");
-        _payloads.put(Attr.PARTNER_CASE_REFERENCES_ID_GUID, "07bf28d5-c162-4873-81d2-7711dd0edbae");
+        _payloads.put(Attr.PARTNER_CASE_REFERENCES_ID_GUID, "cce207b0-3bec-4707-bbc9-590e2a104e9d");
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921002\","
+                                        + "\"Title\": \"Case 20180921003\","
                                         + "\"IssueDescription\": \"20180921001 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
@@ -299,11 +302,11 @@ public class Program {
                                                                                 + "\"IsPrimaryContact\": true}]}],"
                                         + "\"PartnerCaseReferences\": [{\"PartnerName\": \"ThePartners\","
                                                                             + "\"PartnerCaseState\": \"New\","
-                                                                            + "\"PartnerAgentInformation\": {\"LastName\": \"Goodies\","
-                                                                                                          + "\"FirstName\": \"Cookies\"," 
-                                                                                                          // + "\"Email\":\"GC@Yum.com\","
+                                                                            + "\"PartnerAgentInformation\": {\"LastName\": \"Goodiez\","
+                                                                                                          + "\"FirstName\": \"Cookiez\"," 
+                                                                                                          + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 002\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 003\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
