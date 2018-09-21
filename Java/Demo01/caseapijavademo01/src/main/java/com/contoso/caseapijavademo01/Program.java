@@ -216,23 +216,19 @@ public class Program {
      * Chains up several scenarios to illustrate a common usage.
      */
     private static void Demo(){
-        try {
-            String newCaseNumber =              Scenario100_1a_CreateCase();
-            JSONObject newCaseJson =            Scenario100_2a_GetNewCase(newCaseNumber);
-            System.out.println(newCaseJson);
-            String partnerCaseReferenceIdGuid = Scenario100_2a_GetPartnerCaseReferenceIdGuidFromNewCase(newCaseJson);
-            JSONObject defaultCustomer =        Scenario100_2a_GetDefaultCustomerFromNewCase(newCaseJson);
-            System.out.println(defaultCustomer);
-            String defaultCustomerIdGuid =      Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(defaultCustomer);
-            String contactIdGuid =              Scenario100_2a_GetContactIdGuidByKeywordFromDefaultCustomer(defaultCustomer, "John");
-                                                Scenario110_AssignReassignPartnerCaseReferencesAgent(newCaseNumber, partnerCaseReferenceIdGuid);
-                                                Scenario115_ChangePartnerCaseReferencesPartnerCaseState(newCaseNumber, partnerCaseReferenceIdGuid);
-                                                Scenario120_CreateNote(newCaseNumber);
-                                                Scenario145_UpdateContact(newCaseNumber, defaultCustomerIdGuid, contactIdGuid);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage() + "\n\n\n\n");
-        }
+        String newCaseNumber =              Scenario100_1a_CreateCase();
+        JSONObject newCaseJson =            Scenario100_2a_GetNewCase(newCaseNumber);
+        System.out.println(newCaseJson);
+        String partnerCaseReferenceIdGuid = Scenario100_2a_GetPartnerCaseReferenceIdGuidFromNewCase(newCaseJson);
+        JSONObject defaultCustomer =        Scenario100_2a_GetDefaultCustomerFromNewCase(newCaseJson);
+        System.out.println(defaultCustomer);
+        String defaultCustomerIdGuid =      Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(defaultCustomer);
+        String contactIdGuid =              Scenario100_2a_GetContactIdGuidByKeywordFromDefaultCustomer(defaultCustomer, "John");
+                                            Scenario110_AssignReassignPartnerCaseReferencesAgent(newCaseNumber, partnerCaseReferenceIdGuid);
+                                            Scenario115_ChangePartnerCaseReferencesPartnerCaseState(newCaseNumber, partnerCaseReferenceIdGuid);
+                                            Scenario120_CreateNote(newCaseNumber);
+                                            Scenario145_UpdateContact(newCaseNumber, defaultCustomerIdGuid, contactIdGuid);
+                                            Scenario190_CloseCase(newCaseNumber, partnerCaseReferenceIdGuid);
     }
 
     /**
@@ -375,7 +371,19 @@ public class Program {
         Run(Api.SCENARIO145_UPDATE_CONTACT, newCaseNumber, defaultCustomerIdGuid, contactIdGuid, _payloads.get(Attr.CONTACT_PAYLOAD));
     }
 
-   /**
+    /**
+     * Makes PATCH: sets partner case state to "Closed".
+     * 
+     * @param  newCaseNumber              numerical unique identifier of the created case.
+     * @param  partnerCaseReferenceIdGuid GUID of the partner's PartnerCaseReference item.
+     * 
+     * @return  None, since Response type is HTTP 204 No Content.
+     */
+    private static void Scenario190_CloseCase(String newCaseNumber, String partnerCaseReferenceIdGuid) {
+        Run(Api.SCENARIO190_CLOSE_CASE, newCaseNumber, partnerCaseReferenceIdGuid, _payloads.get(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD));
+    }
+
+    /**
      * <p>Assigns headers, payload to HTTP request.
      * <p>**CAUTION** DO NOT use SelfNotification header in Production code.
      * 
@@ -466,8 +474,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921026\","
-                                        + "\"IssueDescription\": \"20180921026 Testing\"," 
+                                        + "\"Title\": \"Case 20180921027\","
+                                        + "\"IssueDescription\": \"20180921027 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -486,7 +494,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 026\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 027\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
