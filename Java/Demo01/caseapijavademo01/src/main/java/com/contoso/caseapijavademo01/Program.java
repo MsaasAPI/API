@@ -39,14 +39,14 @@ public class Program {
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy_MMdd_HHmm");
     private static final String LOG_NAME = "log_" + DATE_FORMATTER.format(new Date()) + ".txt";
     private static final Integer TIME_DELAY = 1000;
-    // private static final Random _random = new Random(new Date().getTime());
-    // private static final Map<Attr, String> _payloads = new HashMap<Attr, String>(); // Contains data (resources and payloads) required per https://msegksdev.trafficmanager.net/swagger/ui/index?sapId=2e12ea69-0884-9b66-8431-13094bcbe81e#/Cases.
+    private static final Random _random = new Random(new Date().getTime());
+    private static final Map<Attr, String> _payloads = new HashMap<Attr, String>(); // Contains data (resources and payloads) required per https://msegksdev.trafficmanager.net/swagger/ui/index?sapId=2e12ea69-0884-9b66-8431-13094bcbe81e#/Cases.
     private static final Map<Attr, String> _caches = new HashMap<Attr, String>(); // Contains HTTP request and repsonse data associated with the most recent transaction. Subject to overwrite by subsequent transactions.
     private static String _token = "";
 
     public static void main(String[] args) {
         BasicConfigurator.configure();
-        // SetPayloads();
+        SetPayloads();
         GetRequestToken();
         System.exit(0);
     }
@@ -261,7 +261,57 @@ public class Program {
                                         + _caches.get(Attr.HTTP_RESPONSE_BODY) + "\r");
         }
     }
-    
+
+    /**
+     * <p>Populates _payloads with case attributes in the form of json strings.
+     * <p>_payloads is directly used by Run().
+     * 
+     * @return  None, since _payloads is a global variable.
+     */
+    private static void SetPayloads() {
+        _payloads.put(Attr.CASE_NUMBER, "118092114524635");
+        _payloads.put(Attr.CUSTOMER_ID_GUID, "4fc1f65e-d740-4385-a8e0-5c0d58b8374e");
+        _payloads.put(Attr.CONTACT_ID_GUID, "aa743cf9-134c-4707-8df1-49d3c52a8c84");
+        _payloads.put(Attr.PARTNER_CASE_REFERENCES_ID_GUID, "07bf28d5-c162-4873-81d2-7711dd0edbae");
+        _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
+                                        + "\"Severity\": \"2\"," 
+                                        + "\"CreationChannel\": \"Web\"," 
+                                        + "\"Title\": \"FJ 20180809001\","
+                                        + "\"IssueDescription\": \"FJ 20180809001 iCare UAT Testing\"," 
+                                        + "\"SupportCountry\": \"AU\","
+                                        + "\"SupportLanguage\": \"en-AU\","
+                                        + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
+                                        + "\"Customers\": [{\"CustomerName\": \"LiBingBing LTD\"," 
+                                                                + "\"CustomerId\": \"Unknown\","
+                                                                + "\"CustomerIdSource\": \"Unknown\"," 
+                                                                + "\"Contacts\": [{\"LastName\": \"Li\","
+                                                                                + "\"FirstName\": \"BingBing\"," 
+                                                                                + "\"Phone\": \"+86 21 2213 0000\","
+                                                                                + "\"Email\": \"LB@Wonderland.org\"," 
+                                                                                + "\"PreferredContactChannel\": \"Phone\","
+                                                                                + "\"IsPrimaryContact\": true}]}],"
+                                        + "\"PartnerCaseReferences\": [{\"PartnerName\": \"ThePartners\","
+                                                                            + "\"PartnerCaseState\": \"New\","
+                                                                            + "\"PartnerAgentInformation\": {\"LastName\": \"Goodies\","
+                                                                                                          + "\"FirstName\": \"Cookies\"," 
+                                                                                                          // + "\"Email\":\"GC@Yum.com\","
+                                                                                                          + "\"Phone\": \"+1-425-882-8080\"},"
+                                                                            + "\"PartnerCaseId\": \"FJ 20180809001\"}],"
+                                        + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
+        _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
+        _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
+                                           + "\"FirstName\": \"Apmex\"," 
+                                           + "\"Email\": \"DA@Tiffany.co.fr\","
+                                           + "\"Phone\": \"bff-4ever\"," 
+                                           + "\"PreferredContactChannel\": \"Phone\"}");
+        _payloads.put(Attr.PARTNER_CASE_REFERENCES_AGENT_PAYLOAD, "{\"PartnerAgentInformation\": {\"LastName\": \"Wangdu\","
+                                                                 + "\"FirstName\": \"Phunsukh\"," 
+                                                                 + "\"Email\":\"Phunsukh.Wangdu@Ladakh.org\","
+                                                                 + "\"Phone\": \"+1-425-882-8888\"}}");
+        _payloads.put(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_PAYLOAD, "{\"PartnerCaseState\": \"Active\"}");
+        _payloads.put(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD, "{\"PartnerCaseState\": \"Closed\"}");
+    }
+
     /**
      * <p>Enumeration of recommended API types offerred by ACE.
      * <p>The only differences for any API with or without "PUBLISH_EVENT_TO_SELF", is:
