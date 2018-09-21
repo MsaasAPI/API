@@ -35,7 +35,7 @@ public class Program {
     private static final String KEY_STORE_PASSWORD = "CaseExchange!+";
     
     /***** OTHER CONSTANTS & STATIC FIELDS *****/
-    // private static final String BASE_URI = "https://api-ppe.support.microsoft.com/v1/cases";
+    private static final String BASE_URI = "https://api-ppe.support.microsoft.com/v1/cases";
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy_MMdd_HHmm");
     private static final String LOG_NAME = "log_" + DATE_FORMATTER.format(new Date()) + ".txt";
     private static final Integer TIME_DELAY = 1000;
@@ -110,6 +110,74 @@ public class Program {
                     Thread.sleep(TIME_DELAY);
                     retryCounter++;
                 }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n\n\n\n");
+        }
+    }
+
+    /**
+     * Serves as the core method of this application by:
+     * <p>1. crafting proper signatures per Swagger specifications (https://msegksdev.trafficmanager.net/swagger/ui/index?sapId=2e12ea69-0884-9b66-8431-13094bcbe81e#/Cases).
+     * <p>2. invoking MakeRequest() to carry out the actual HTTP transactions.
+     * <p>3. processing and logging transaction data (request and response).
+     * 
+     * @param  api        type of API calls specified by the enum Api.
+     * @param  caseNumber unique identifier for a valid case in the ACE.
+     * @param  args       other indefinite number of attribute(s) (contact id guid, payload, etc).
+     * 
+     * @return  None. Essential transaction data is printed on console or logged in storage.
+     */
+    private static void Run(Api api, String caseNumber, String... args) {
+        try {
+            switch (api) {
+            case GET_TOKEN:
+                System.out.println(_token);
+                break;
+            case SCENARIO100_CREATE_CASE:
+                MakeRequest(new HttpPost(), BASE_URI, args[0], false);
+                break;
+            case SCENARIO110_ASSIGN_REASSIGN_PARTNER_CASE_REFERENCES_AGENT:
+            case SCENARIO115_CHANGE_PARTNER_CASE_REFERENCES_PARTNER_CASE_STATE:
+            case SCENARIO190_CLOSE_CASE:
+                MakeRequest(new HttpPatch(), BASE_URI + "/" + caseNumber + "/partnerCaseReferences/" + args[0], args[1], false);
+                break;
+            case SCENARIO110_ASSIGN_REASSIGN_PARTNER_CASE_REFERENCES_AGENT_AND_PUBLISH_EVENT_TO_SELF:
+            case SCENARIO115_CHANGE_PARTNER_CASE_REFERENCES_PARTNER_CASE_STATE_AND_PUBLISH_EVENT_TO_SELF:
+            case SCENARIO190_CLOSE_CASE_AND_PUBLISH_EVENT_TO_SELF:
+                MakeRequest(new HttpPatch(), BASE_URI + "/" + caseNumber + "/partnerCaseReferences/" + args[0], args[1], true);
+                break;
+            case SCENARIO120_CREATE_NOTE:
+                MakeRequest(new HttpPost(), BASE_URI + "/" + caseNumber + "/notes", args[0], false);
+                break;
+            case SCENARIO120_CREATE_NOTE_AND_PUBLISH_EVENT_TO_SELF:
+                MakeRequest(new HttpPost(), BASE_URI + "/" + caseNumber + "/notes", args[0], true);
+                break;
+            case SCENARIO140_CREATE_CONTACT:
+                MakeRequest(new HttpPost(), BASE_URI + "/" + caseNumber + "/customers/" + args[0] + "/contacts", args[1], false);
+                break;
+            case SCENARIO140_CREATE_CONTACT_AND_PUBLISH_EVENT_TO_SELF:
+                MakeRequest(new HttpPost(), BASE_URI + "/" + caseNumber + "/customers/" + args[0] + "/contacts", args[1], true);
+                break;
+            case SCENARIO145_UPDATE_CONTACT:
+                MakeRequest(new HttpPatch(), BASE_URI + "/" + caseNumber + "/customers/" + args[0] + "/contacts/" + args[1], args[2], false);
+                break;
+            case SCENARIO145_UPDATE_CONTACT_AND_PUBLISH_EVENT_TO_SELF:
+                MakeRequest(new HttpPatch(), BASE_URI + "/" + caseNumber + "/customers/" + args[0] + "/contacts/" + args[1], args[2], true);
+                break;
+            case SCENARIO200_GET_CASE:
+                MakeRequest(new HttpGet(), BASE_URI + "/" + caseNumber, "", false);
+                break;
+            case DEMO:
+                // Demo();
+                break;
+            default:
+                break;
+            }
+
+            if(api != Api.GET_TOKEN){
+                LogCaches();
             }
         } catch (Exception e) {
             e.printStackTrace();
