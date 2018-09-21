@@ -230,6 +230,7 @@ public class Program {
                                                 Scenario120_CreateNote(newCaseNumber);
             AddRandomContactsToNewCase(newCaseNumber, defaultCustomerIdGuid);
             GetNewestContactFromNewCase(newCaseNumber);
+                                                Scenario145_UpdateContact(newCaseNumber, defaultCustomerIdGuid, contactIdGuid);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
@@ -361,6 +362,19 @@ public class Program {
      */
     private static void Scenario120_CreateNote(String newCaseNumber){
         Run(Api.SCENARIO120_CREATE_NOTE, newCaseNumber, _payloads.get(Attr.NOTE_PAYLOAD));
+    }
+
+    /**
+     * <p>Makes PATCH: updates Contact.
+     * 
+     * @param  newCaseNumber         numerical unique identifier of the created case.
+     * @param  defaultCustomerIdGuid ID GUID of the Customer item of the created case, assuming we will be dealing with single-Customer cases only, which is true for now.
+     * @param  contactIdGuid         ID GUID of the target Contact item to be updated.
+     * 
+     * @return  None, since Response type is HTTP 204 No Content.
+     */
+    private static void Scenario145_UpdateContact(String newCaseNumber, String defaultCustomerIdGuid, String contactIdGuid){
+        Run(Api.SCENARIO145_UPDATE_CONTACT, newCaseNumber, defaultCustomerIdGuid, contactIdGuid, _payloads.get(Attr.CONTACT_PAYLOAD));
     }
 
     /**
@@ -517,8 +531,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921021\","
-                                        + "\"IssueDescription\": \"20180921021 Testing\"," 
+                                        + "\"Title\": \"Case 20180921024\","
+                                        + "\"IssueDescription\": \"20180921024 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -537,7 +551,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 021\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 024\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
