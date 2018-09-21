@@ -48,6 +48,10 @@ public class Program {
         BasicConfigurator.configure();
         SetPayloads();
         GetRequestToken();
+
+        //--Scenario 200 Partner gets a case
+        Run(Api.SCENARIO200_GET_CASE, _payloads.get(Attr.CASE_NUMBER)); 
+
         System.exit(0);
     }
 
