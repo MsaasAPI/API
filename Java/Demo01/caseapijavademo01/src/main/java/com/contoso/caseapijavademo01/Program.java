@@ -217,6 +217,7 @@ public class Program {
      */
     private static void Demo(){
         String newCaseNumber =              Scenario100_1a_CreateCase();
+        JSONObject newCaseJson =            Scenario100_2a_GetNewCase(newCaseNumber);
     }
 
     /**
@@ -227,6 +228,18 @@ public class Program {
     private static String Scenario100_1a_CreateCase(){
         Run(Api.SCENARIO100_CREATE_CASE, "", _payloads.get(Attr.CASE_PAYLOAD));
         return new JSONObject(_caches.get(Attr.HTTP_RESPONSE_BODY)).getString("CaseNumber");
+    }
+
+    /**
+     * Makes GET: acquires casejson of the created case.
+     * 
+     * @param  newCaseNumber numerical unique identifier of the created case.
+     * 
+     * @return  New case casejson.
+     */
+    private static JSONObject Scenario100_2a_GetNewCase(String newCaseNumber){
+        Run(Api.SCENARIO200_GET_CASE, newCaseNumber);
+        return new JSONObject(_caches.get(Attr.HTTP_RESPONSE_BODY));
     }
 
     /**
@@ -320,8 +333,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921009\","
-                                        + "\"IssueDescription\": \"20180921009 Testing\"," 
+                                        + "\"Title\": \"Case 20180921010\","
+                                        + "\"IssueDescription\": \"20180921010 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -340,7 +353,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 009\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 010\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
