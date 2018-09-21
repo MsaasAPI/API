@@ -1,11 +1,10 @@
 package com.contoso.caseapijavademo01;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.URI;
 import java.security.*;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
 import com.microsoft.aad.adal4j.*;
@@ -23,7 +22,7 @@ import org.apache.log4j.BasicConfigurator;
 public class Program {
     /***** USER CONFIGURABLE FIELDS *****/
     // private static final String PARTNER_NAME = "FJ";
-    // private static final String LOG_FOLDER = "Logs/";
+    private static final String LOG_FOLDER = "Logs/";
     private static final Integer MAX_RETRIES = 3;
     
     /***** CREDENTIALS *****/
@@ -36,8 +35,8 @@ public class Program {
     
     /***** OTHER CONSTANTS & STATIC FIELDS *****/
     // private static final String BASE_URI = "https://api-ppe.support.microsoft.com/v1/cases";
-    // private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy_MMdd_HHmm");
-    // private static final String LOG_NAME = "log_" + DATE_FORMATTER.format(new Date()) + ".txt";
+    private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy_MMdd_HHmm");
+    private static final String LOG_NAME = "log_" + DATE_FORMATTER.format(new Date()) + ".txt";
     private static final Integer TIME_DELAY = 1000;
     // private static final Random _random = new Random(new Date().getTime());
     // private static final Map<Attr, String> _payloads = new HashMap<Attr, String>(); // Contains data (resources and payloads) required per https://msegksdev.trafficmanager.net/swagger/ui/index?sapId=2e12ea69-0884-9b66-8431-13094bcbe81e#/Cases.
@@ -194,6 +193,31 @@ public class Program {
                                         + _caches.get(Attr.HTTP_RESPONSE_BODY) + "\r");
         }
     }
+    
+    /**
+     * <p>Enumeration of recommended API types offerred by ACE.
+     * <p>The only differences for any API with or without "PUBLISH_EVENT_TO_SELF", is:
+     * <p>- The addition of reqeust header "test-mseg", "{\'SelfNotification\':\'true\'}".
+     * <p>- Publishing of Service Bus event to the partner's own subscription for testing purpose.
+     */
+    private enum Api {
+        SCENARIO100_CREATE_CASE,
+        SCENARIO110_ASSIGN_REASSIGN_PARTNER_CASE_REFERENCES_AGENT,
+        SCENARIO110_ASSIGN_REASSIGN_PARTNER_CASE_REFERENCES_AGENT_AND_PUBLISH_EVENT_TO_SELF,
+        SCENARIO115_CHANGE_PARTNER_CASE_REFERENCES_PARTNER_CASE_STATE,
+        SCENARIO115_CHANGE_PARTNER_CASE_REFERENCES_PARTNER_CASE_STATE_AND_PUBLISH_EVENT_TO_SELF,
+        SCENARIO120_CREATE_NOTE,
+        SCENARIO120_CREATE_NOTE_AND_PUBLISH_EVENT_TO_SELF,
+        SCENARIO140_CREATE_CONTACT,
+        SCENARIO140_CREATE_CONTACT_AND_PUBLISH_EVENT_TO_SELF,
+        SCENARIO145_UPDATE_CONTACT,
+        SCENARIO145_UPDATE_CONTACT_AND_PUBLISH_EVENT_TO_SELF,
+        SCENARIO190_CLOSE_CASE,
+        SCENARIO190_CLOSE_CASE_AND_PUBLISH_EVENT_TO_SELF,
+        SCENARIO200_GET_CASE, 
+        GET_TOKEN,
+        DEMO
+    }
 
     /**
      * List of keys stored in the global map/dictionary _payloads.
@@ -232,6 +256,27 @@ public class Program {
         if (retryCounter >= MAX_RETRIES) {
             System.out.println("Max retries exceeded.");
             System.exit(1);
+        }
+    }
+
+    /**
+     * Log contains of the global variable map/dictionary _caches to disk storage.
+     */
+    private static void LogCaches() {
+        // Determine whether the directory exists. If not, create one
+        File directory = new File(LOG_FOLDER);
+
+        if (!directory.exists())
+            directory.mkdir();
+
+        // Log data
+        try (FileWriter fw = new FileWriter(LOG_FOLDER + LOG_NAME, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                PrintWriter out = new PrintWriter(bw)) {
+            out.println(_caches + "\n\n");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n\n\n\n");
         }
     }
 }
