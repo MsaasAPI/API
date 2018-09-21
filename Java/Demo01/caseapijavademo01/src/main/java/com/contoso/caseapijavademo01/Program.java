@@ -222,6 +222,7 @@ public class Program {
         String partnerCaseReferenceIdGuid = Scenario100_2a_GetPartnerCaseReferenceIdGuidFromNewCase(newCaseJson);
         JSONObject defaultCustomer =        Scenario100_2a_GetDefaultCustomerFromNewCase(newCaseJson);
         System.out.println(defaultCustomer);
+        String defaultCustomerIdGuid =      Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(defaultCustomer);
     }
 
     /**
@@ -276,6 +277,17 @@ public class Program {
      */
     private static JSONObject Scenario100_2a_GetDefaultCustomerFromNewCase(JSONObject newCaseJson){
         return (JSONObject)newCaseJson.getJSONArray("Customers").get(0); // Applicable to single-Customer cases only, which is true, for now.
+    }
+
+    /**
+     * Parse Customer ID GUID from the default Customer json.
+     * 
+     * @param  defaultCustomer complete data in JSON format of the Customer item of the created case, assuming we will be dealing with single-Customer cases only, which is true for now.
+     * 
+     * @return  Customer ID GUID.
+     */
+    private static String Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(JSONObject defaultCustomer){
+        return defaultCustomer.getString("id");
     }
 
     /**
