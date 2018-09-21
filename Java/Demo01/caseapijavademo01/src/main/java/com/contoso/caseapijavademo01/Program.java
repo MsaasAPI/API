@@ -49,6 +49,9 @@ public class Program {
         SetPayloads();
         GetRequestToken();
 
+        //--Scenario 100 Partner creates a new case. Empty string parameter is placeholder for caseNumber
+        Run(Api.SCENARIO100_CREATE_CASE, "", _payloads.get(Attr.CASE_PAYLOAD));        
+
         //--Scenario 200 Partner gets a case
         Run(Api.SCENARIO200_GET_CASE, _payloads.get(Attr.CASE_NUMBER)); 
 
@@ -280,18 +283,18 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"FJ 20180809001\","
-                                        + "\"IssueDescription\": \"FJ 20180809001 iCare UAT Testing\"," 
-                                        + "\"SupportCountry\": \"AU\","
-                                        + "\"SupportLanguage\": \"en-AU\","
+                                        + "\"Title\": \"Case 20180921002\","
+                                        + "\"IssueDescription\": \"20180921001 Testing\"," 
+                                        + "\"SupportCountry\": \"US\","
+                                        + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
                                         + "\"Customers\": [{\"CustomerName\": \"LiBingBing LTD\"," 
                                                                 + "\"CustomerId\": \"Unknown\","
                                                                 + "\"CustomerIdSource\": \"Unknown\"," 
-                                                                + "\"Contacts\": [{\"LastName\": \"Li\","
-                                                                                + "\"FirstName\": \"BingBing\"," 
+                                                                + "\"Contacts\": [{\"LastName\": \"Doe\","
+                                                                                + "\"FirstName\": \"John\"," 
                                                                                 + "\"Phone\": \"+86 21 2213 0000\","
-                                                                                + "\"Email\": \"LB@Wonderland.org\"," 
+                                                                                + "\"Email\": \"JD@Wonderland.org\"," 
                                                                                 + "\"PreferredContactChannel\": \"Phone\","
                                                                                 + "\"IsPrimaryContact\": true}]}],"
                                         + "\"PartnerCaseReferences\": [{\"PartnerName\": \"ThePartners\","
@@ -300,7 +303,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookies\"," 
                                                                                                           // + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"FJ 20180809001\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 002\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
