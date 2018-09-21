@@ -224,12 +224,10 @@ public class Program {
             JSONObject defaultCustomer =        Scenario100_2a_GetDefaultCustomerFromNewCase(newCaseJson);
             System.out.println(defaultCustomer);
             String defaultCustomerIdGuid =      Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(defaultCustomer);
-            String contactIdGuid =              Scenario100_2a_GetContactIdGuidByKeywordFromDefaultCustomer(defaultCustomer, "Doe");
+            String contactIdGuid =              Scenario100_2a_GetContactIdGuidByKeywordFromDefaultCustomer(defaultCustomer, "John");
                                                 Scenario110_AssignReassignPartnerCaseReferencesAgent(newCaseNumber, partnerCaseReferenceIdGuid);
                                                 Scenario115_ChangePartnerCaseReferencesPartnerCaseState(newCaseNumber, partnerCaseReferenceIdGuid);
                                                 Scenario120_CreateNote(newCaseNumber);
-            AddRandomContactsToNewCase(newCaseNumber, defaultCustomerIdGuid);
-            GetNewestContactFromNewCase(newCaseNumber);
                                                 Scenario145_UpdateContact(newCaseNumber, defaultCustomerIdGuid, contactIdGuid);
         } catch (Exception e) {
             e.printStackTrace();
@@ -377,69 +375,6 @@ public class Program {
         Run(Api.SCENARIO145_UPDATE_CONTACT, newCaseNumber, defaultCustomerIdGuid, contactIdGuid, _payloads.get(Attr.CONTACT_PAYLOAD));
     }
 
-    /**
-     * <p>Makes POST: creates five new random Contacts to default Customer of the created case.
-     * <p>Note that this is not a user scenario, but only to facilitate "GetAndCacheNewestContactFromNewCase" scenario
-     * 
-     * @param  newCaseNumber         numerical unique identifier of the created case.
-     * @param  defaultCustomerIdGuid ID GUID of the Customer item of the created case, assuming we will be dealing with single-Customer cases only, which is true for now.
-     * 
-     * @return  None, since Response type is HTTP 201, and response body contains only Contact ID GUID.
-     */
-    private static void AddRandomContactsToNewCase(String newCaseNumber, String defaultCustomerIdGuid) {
-        try {
-            for(int i=1; i<5; i++){
-                PutRandomContactToPayloads();
-                Run(Api.SCENARIO140_CREATE_CONTACT, newCaseNumber, defaultCustomerIdGuid, _payloads.get(Attr.CONTACT_PAYLOAD));
-                Thread.sleep(TIME_DELAY);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage() + "\n\n\n\n");
-        }
-    }
-
-    /**
-     * <p>Get newest Contact by:
-     * <p>- Makes GET: acquires casejson of the case.
-     * <p>- Parses the newest Contact in the default Customer by comparing CreatedOn timestamp.
-     * 
-     * @param  newCaseNumber numerical unique identifier of the created case.
-     * 
-     * @return  Newest Contact.
-     */
-    private static String GetNewestContactFromNewCase(String newCaseNumber){
-        try{
-            Run(Api.SCENARIO200_GET_CASE, newCaseNumber);
-
-            JSONObject caseJson = new JSONObject(_caches.get(Attr.HTTP_RESPONSE_BODY));
-            JSONObject defaultCustomer = (JSONObject)caseJson.getJSONArray("Customers").get(0); // Applicable to single-Customer cases only, which is true, for now.
-            JSONArray allContacts = defaultCustomer.getJSONArray("Contacts");
-            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            Date newestDate = f.parse(((JSONObject)allContacts.get(0)).getString("CreatedOn")); // Initially assign CreatedOn of first item as the newest (baseline).
-            String newestContact = allContacts.get(0).toString(); // Initially assign first item as the newest (baseline).
-            Date subjectDate = null;
-            
-            // Find the newest contact by iteratively identifying the newest CreatedOn date.
-            for (Iterator<Object> iterator = allContacts.iterator(); iterator.hasNext();) {
-                JSONObject c = (JSONObject)iterator.next();
-                subjectDate = f.parse(c.getString("CreatedOn"));
-                
-                if (subjectDate.compareTo(newestDate) > 0) {
-                    newestDate = subjectDate;
-                    newestContact = c.toString();
-                }
-            }
-
-            return newestContact;
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage() + "\n\n\n\n");
-        }
-
-        return "";
-   }
-
    /**
      * <p>Assigns headers, payload to HTTP request.
      * <p>**CAUTION** DO NOT use SelfNotification header in Production code.
@@ -531,8 +466,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921024\","
-                                        + "\"IssueDescription\": \"20180921024 Testing\"," 
+                                        + "\"Title\": \"Case 20180921026\","
+                                        + "\"IssueDescription\": \"20180921026 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -551,7 +486,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 024\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 026\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
