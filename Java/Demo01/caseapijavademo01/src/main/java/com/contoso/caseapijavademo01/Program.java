@@ -218,7 +218,10 @@ public class Program {
     private static void Demo(){
         String newCaseNumber =              Scenario100_1a_CreateCase();
         JSONObject newCaseJson =            Scenario100_2a_GetNewCase(newCaseNumber);
+        System.out.println(newCaseJson);
         String partnerCaseReferenceIdGuid = Scenario100_2a_GetPartnerCaseReferenceIdGuidFromNewCase(newCaseJson);
+        JSONObject defaultCustomer =        Scenario100_2a_GetDefaultCustomerFromNewCase(newCaseJson);
+        System.out.println(defaultCustomer);
     }
 
     /**
@@ -262,6 +265,17 @@ public class Program {
         }
 
         return "";
+    }
+
+    /**
+     * Parse the default Customer json from the casejson.
+     * 
+     * @param  newCaseJson complete data in JSON format of the created case.
+     * 
+     * @return  Default Customer json.
+     */
+    private static JSONObject Scenario100_2a_GetDefaultCustomerFromNewCase(JSONObject newCaseJson){
+        return (JSONObject)newCaseJson.getJSONArray("Customers").get(0); // Applicable to single-Customer cases only, which is true, for now.
     }
 
     /**
@@ -355,8 +369,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921013\","
-                                        + "\"IssueDescription\": \"20180921013 Testing\"," 
+                                        + "\"Title\": \"Case 20180921014\","
+                                        + "\"IssueDescription\": \"20180921014 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -375,7 +389,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 013\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 014\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
