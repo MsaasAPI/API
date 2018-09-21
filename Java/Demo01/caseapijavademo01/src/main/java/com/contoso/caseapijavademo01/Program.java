@@ -49,30 +49,32 @@ public class Program {
         SetPayloads();
         GetRequestToken();
 
-        //--Scenario 100 Partner creates a new case. Empty string parameter is placeholder for caseNumber
-        Run(Api.SCENARIO100_CREATE_CASE, "", _payloads.get(Attr.CASE_PAYLOAD));        
+        // //--Scenario 100 Partner creates a new case. Empty string parameter is placeholder for caseNumber
+        // Run(Api.SCENARIO100_CREATE_CASE, "", _payloads.get(Attr.CASE_PAYLOAD));        
 
-        //--Scenario 110 Partner assigns or reassigns an agent
-        Run(Api.SCENARIO110_ASSIGN_REASSIGN_PARTNER_CASE_REFERENCES_AGENT, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_AGENT_PAYLOAD));
+        // //--Scenario 110 Partner assigns or reassigns an agent
+        // Run(Api.SCENARIO110_ASSIGN_REASSIGN_PARTNER_CASE_REFERENCES_AGENT, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_AGENT_PAYLOAD));
 
-        //--Scenario 115 Partner changes partner's case state
-        Run(Api.SCENARIO115_CHANGE_PARTNER_CASE_REFERENCES_PARTNER_CASE_STATE, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_PAYLOAD)); 
+        // //--Scenario 115 Partner changes partner's case state
+        // Run(Api.SCENARIO115_CHANGE_PARTNER_CASE_REFERENCES_PARTNER_CASE_STATE, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_PAYLOAD)); 
 
-        //--Scenario 120 Partner creates a new note
-        Run(Api.SCENARIO120_CREATE_NOTE, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.NOTE_PAYLOAD)); 
+        // //--Scenario 120 Partner creates a new note
+        // Run(Api.SCENARIO120_CREATE_NOTE, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.NOTE_PAYLOAD)); 
 
-        //--Scenario 140 Partner creates a new contact 
-        Run(Api.SCENARIO140_CREATE_CONTACT, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.CUSTOMER_ID_GUID), _payloads.get(Attr.CONTACT_PAYLOAD)); 
+        // //--Scenario 140 Partner creates a new contact 
+        // Run(Api.SCENARIO140_CREATE_CONTACT, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.CUSTOMER_ID_GUID), _payloads.get(Attr.CONTACT_PAYLOAD)); 
 
-        //--Scenario 145 Partner updates a contact 
-        Run(Api.SCENARIO145_UPDATE_CONTACT, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.CUSTOMER_ID_GUID), _payloads.get(Attr.CONTACT_ID_GUID), _payloads.get(Attr.CONTACT_PAYLOAD)); 
+        // //--Scenario 145 Partner updates a contact 
+        // Run(Api.SCENARIO145_UPDATE_CONTACT, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.CUSTOMER_ID_GUID), _payloads.get(Attr.CONTACT_ID_GUID), _payloads.get(Attr.CONTACT_PAYLOAD)); 
 
-        //--Scenario 190 Partner closes a case 
-        Run(Api.SCENARIO190_CLOSE_CASE, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD)); 
+        // //--Scenario 190 Partner closes a case 
+        // Run(Api.SCENARIO190_CLOSE_CASE, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD)); 
 
-        //--Scenario 200 Partner gets a case
-        Run(Api.SCENARIO200_GET_CASE, _payloads.get(Attr.CASE_NUMBER)); 
+        // //--Scenario 200 Partner gets a case
+        // Run(Api.SCENARIO200_GET_CASE, _payloads.get(Attr.CASE_NUMBER)); 
 
+        //--Demo
+        Run(Api.DEMO, "");
         System.exit(0);
     }
 
@@ -195,8 +197,8 @@ public class Program {
                 MakeRequest(new HttpGet(), BASE_URI + "/" + caseNumber, "", false);
                 break;
             case DEMO:
-                // Demo();
-                break;
+                Demo();
+                return;
             default:
                 break;
             }
@@ -208,6 +210,23 @@ public class Program {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
         }
+    }
+
+    /**
+     * Chains up several scenarios to illustrate a common usage.
+     */
+    private static void Demo(){
+        String newCaseNumber =              Scenario100_1a_CreateCase();
+    }
+
+    /**
+     * Makes POST: creates new case and returns case number.
+     * 
+     * @return  Case number (numerical unique identifier) of created case.
+     */
+    private static String Scenario100_1a_CreateCase(){
+        Run(Api.SCENARIO100_CREATE_CASE, "", _payloads.get(Attr.CASE_PAYLOAD));
+        return new JSONObject(_caches.get(Attr.HTTP_RESPONSE_BODY)).getString("CaseNumber");
     }
 
     /**
@@ -301,8 +320,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921008\","
-                                        + "\"IssueDescription\": \"20180921008 Testing\"," 
+                                        + "\"Title\": \"Case 20180921009\","
+                                        + "\"IssueDescription\": \"20180921009 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -321,7 +340,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 008\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 009\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
