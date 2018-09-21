@@ -7,13 +7,14 @@ import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
-import com.microsoft.aad.adal4j.*;
 
+import com.microsoft.aad.adal4j.*;
 import org.apache.http.*;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.*;
 import org.apache.log4j.BasicConfigurator;
+import org.json.*;
 
 /**
  * Hello world!
@@ -45,7 +46,6 @@ public class Program {
 
     public static void main(String[] args) {
         BasicConfigurator.configure();
-        System.out.println("Hello World!");
         // SetPayloads();
         GetRequestToken();
         System.exit(0);
