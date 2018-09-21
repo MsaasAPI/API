@@ -67,6 +67,9 @@ public class Program {
         //--Scenario 145 Partner updates a contact 
         Run(Api.SCENARIO145_UPDATE_CONTACT, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.CUSTOMER_ID_GUID), _payloads.get(Attr.CONTACT_ID_GUID), _payloads.get(Attr.CONTACT_PAYLOAD)); 
 
+        //--Scenario 190 Partner closes a case 
+        Run(Api.SCENARIO190_CLOSE_CASE, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD)); 
+
         //--Scenario 200 Partner gets a case
         Run(Api.SCENARIO200_GET_CASE, _payloads.get(Attr.CASE_NUMBER)); 
 
