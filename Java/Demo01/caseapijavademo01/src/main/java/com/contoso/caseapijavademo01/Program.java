@@ -227,7 +227,9 @@ public class Program {
             String contactIdGuid =              Scenario100_2a_GetContactIdGuidByKeywordFromDefaultCustomer(defaultCustomer, "Doe");
                                                 Scenario110_AssignReassignPartnerCaseReferencesAgent(newCaseNumber, partnerCaseReferenceIdGuid);
                                                 Scenario115_ChangePartnerCaseReferencesPartnerCaseState(newCaseNumber, partnerCaseReferenceIdGuid);
-        } catch (Exception e) {
+                                                Scenario120_CreateNote(newCaseNumber);
+            AddRandomContactsToNewCase(newCaseNumber, defaultCustomerIdGuid);
+                                            } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
         }
@@ -350,6 +352,39 @@ public class Program {
     }
 
     /**
+     * Makes POST: creates new note to the created case.
+     * 
+     * @param  newCaseNumber numerical unique identifier of the created case.
+     * 
+     * @return  None, since Response type is HTTP 201, and response body contains only Note ID GUID.
+     */
+    private static void Scenario120_CreateNote(String newCaseNumber){
+        Run(Api.SCENARIO120_CREATE_NOTE, newCaseNumber, _payloads.get(Attr.NOTE_PAYLOAD));
+    }
+
+    /**
+     * <p>Makes POST: creates five new random Contacts to default Customer of the created case.
+     * <p>Note that this is not a user scenario, but only to facilitate "GetAndCacheNewestContactFromNewCase" scenario
+     * 
+     * @param  newCaseNumber         numerical unique identifier of the created case.
+     * @param  defaultCustomerIdGuid ID GUID of the Customer item of the created case, assuming we will be dealing with single-Customer cases only, which is true for now.
+     * 
+     * @return  None, since Response type is HTTP 201, and response body contains only Contact ID GUID.
+     */
+    private static void AddRandomContactsToNewCase(String newCaseNumber, String defaultCustomerIdGuid) {
+        try {
+            for(int i=1; i<5; i++){
+                PutRandomContactToPayloads();
+                Run(Api.SCENARIO140_CREATE_CONTACT, newCaseNumber, defaultCustomerIdGuid, _payloads.get(Attr.CONTACT_PAYLOAD));
+                Thread.sleep(TIME_DELAY);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n\n\n\n");
+        }
+    }
+
+    /**
      * <p>Assigns headers, payload to HTTP request.
      * <p>**CAUTION** DO NOT use SelfNotification header in Production code.
      * 
@@ -440,8 +475,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921020\","
-                                        + "\"IssueDescription\": \"20180921020 Testing\"," 
+                                        + "\"Title\": \"Case 20180921021\","
+                                        + "\"IssueDescription\": \"20180921021 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -460,7 +495,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 020\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 021\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
@@ -474,6 +509,20 @@ public class Program {
                                                                  + "\"Phone\": \"+1-425-882-8888\"}}");
         _payloads.put(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_PAYLOAD, "{\"PartnerCaseState\": \"Active\"}");
         _payloads.put(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD, "{\"PartnerCaseState\": \"Closed\"}");
+    }
+
+    /**
+     * <p>Populates _payloads with Contact payload in the form of json strings.
+     * <p>This is used solely for creating random Contacts.
+     * 
+     * @return  None, since _payloads is a global variable.
+     */
+    private static void PutRandomContactToPayloads() {
+        _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"LN" + _random.nextInt(100) + "\"," 
+                                           + "\"FirstName\": \"FN" + _random.nextInt(100) + "\"," 
+                                           + "\"Email\": \"LF" + _random.nextInt(100) + "@Example.net\","
+                                           + "\"Phone\": \"" + _random.nextInt(1000000000) + "\"," 
+                                           + "\"PreferredContactChannel\": \"Phone\"}");
     }
 
     /**
