@@ -39,7 +39,6 @@ public class Program {
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy_MMdd_HHmm");
     private static final String LOG_NAME = "log_" + DATE_FORMATTER.format(new Date()) + ".txt";
     private static final Integer TIME_DELAY = 1000;
-    private static final Random _random = new Random(new Date().getTime());
     private static final Map<Attr, String> _payloads = new HashMap<Attr, String>(); // Contains data (resources and payloads) required per https://msegksdev.trafficmanager.net/swagger/ui/index?sapId=2e12ea69-0884-9b66-8431-13094bcbe81e#/Cases.
     private static final Map<Attr, String> _caches = new HashMap<Attr, String>(); // Contains HTTP request and repsonse data associated with the most recent transaction. Subject to overwrite by subsequent transactions.
     private static String _token = "";
@@ -474,8 +473,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921027\","
-                                        + "\"IssueDescription\": \"20180921027 Testing\"," 
+                                        + "\"Title\": \"Case 20180921028\","
+                                        + "\"IssueDescription\": \"20180921028 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -494,7 +493,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 027\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 028\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
@@ -508,20 +507,6 @@ public class Program {
                                                                  + "\"Phone\": \"+1-425-882-8888\"}}");
         _payloads.put(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_PAYLOAD, "{\"PartnerCaseState\": \"Active\"}");
         _payloads.put(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD, "{\"PartnerCaseState\": \"Closed\"}");
-    }
-
-    /**
-     * <p>Populates _payloads with Contact payload in the form of json strings.
-     * <p>This is used solely for creating random Contacts.
-     * 
-     * @return  None, since _payloads is a global variable.
-     */
-    private static void PutRandomContactToPayloads() {
-        _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"LN" + _random.nextInt(100) + "\"," 
-                                           + "\"FirstName\": \"FN" + _random.nextInt(100) + "\"," 
-                                           + "\"Email\": \"LF" + _random.nextInt(100) + "@Example.net\","
-                                           + "\"Phone\": \"" + _random.nextInt(1000000000) + "\"," 
-                                           + "\"PreferredContactChannel\": \"Phone\"}");
     }
 
     /**
