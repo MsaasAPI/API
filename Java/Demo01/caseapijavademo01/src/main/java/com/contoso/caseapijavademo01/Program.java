@@ -218,7 +218,6 @@ public class Program {
     private static void Demo(){
         try {
             String newCaseNumber =              Scenario100_1a_CreateCase();
-                                                Thread.sleep(2000); // Give Case Exchange sufficient time buffer to persist new case after case creation
             JSONObject newCaseJson =            Scenario100_2a_GetNewCase(newCaseNumber);
             System.out.println(newCaseJson);
             String partnerCaseReferenceIdGuid = Scenario100_2a_GetPartnerCaseReferenceIdGuidFromNewCase(newCaseJson);
@@ -226,6 +225,8 @@ public class Program {
             System.out.println(defaultCustomer);
             String defaultCustomerIdGuid =      Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(defaultCustomer);
             String contactIdGuid =              Scenario100_2a_GetContactIdGuidByKeywordFromDefaultCustomer(defaultCustomer, "Doe");
+                                                Scenario110_AssignReassignPartnerCaseReferencesAgent(newCaseNumber, partnerCaseReferenceIdGuid);
+                                                Scenario115_ChangePartnerCaseReferencesPartnerCaseState(newCaseNumber, partnerCaseReferenceIdGuid);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage() + "\n\n\n\n");
@@ -325,6 +326,30 @@ public class Program {
     }
 
     /**
+     * Makes PATCH: updates partner agent info.
+     * 
+     * @param  newCaseNumber              numerical unique identifier of the created case.
+     * @param  partnerCaseReferenceIdGuid ID GUID of the partner's PartnerCaseReference item.
+     * 
+     * @return  None, since Response type is HTTP 204 No Content.
+     */
+    private static void Scenario110_AssignReassignPartnerCaseReferencesAgent(String newCaseNumber, String partnerCaseReferenceIdGuid) {
+        Run(Api.SCENARIO110_ASSIGN_REASSIGN_PARTNER_CASE_REFERENCES_AGENT, newCaseNumber, partnerCaseReferenceIdGuid, _payloads.get(Attr.PARTNER_CASE_REFERENCES_AGENT_PAYLOAD));
+    }
+
+    /**
+     * Makes PATCH: updates partner case state.
+     * 
+     * @param  newCaseNumber              numerical unique identifier of the created case.
+     * @param  partnerCaseReferenceIdGuid GUID of the partner's PartnerCaseReference item.
+     * 
+     * @return  None, since Response type is HTTP 204 No Content.
+     */
+    private static void Scenario115_ChangePartnerCaseReferencesPartnerCaseState(String newCaseNumber, String partnerCaseReferenceIdGuid) {
+        Run(Api.SCENARIO115_CHANGE_PARTNER_CASE_REFERENCES_PARTNER_CASE_STATE, newCaseNumber, partnerCaseReferenceIdGuid, _payloads.get(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_PAYLOAD));
+    }
+
+    /**
      * <p>Assigns headers, payload to HTTP request.
      * <p>**CAUTION** DO NOT use SelfNotification header in Production code.
      * 
@@ -415,8 +440,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921018\","
-                                        + "\"IssueDescription\": \"20180921018 Testing\"," 
+                                        + "\"Title\": \"Case 20180921020\","
+                                        + "\"IssueDescription\": \"20180921020 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -435,7 +460,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 018\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 020\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
