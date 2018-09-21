@@ -294,15 +294,15 @@ public class Program {
      * @return  None, since _payloads is a global variable.
      */
     private static void SetPayloads() {
-        _payloads.put(Attr.CASE_NUMBER, "118092114525131");
-        _payloads.put(Attr.CUSTOMER_ID_GUID, "8840d66a-ba4a-4987-80f1-426f4a86bf7c");
-        _payloads.put(Attr.CONTACT_ID_GUID, "5d2007f5-bb64-4719-8b5f-e92df25ebfeb");
-        _payloads.put(Attr.PARTNER_CASE_REFERENCES_ID_GUID, "e7d7c5f8-27ef-438b-a1a0-2651383012e5");
+        _payloads.put(Attr.CASE_NUMBER, "118092114525133");
+        _payloads.put(Attr.CUSTOMER_ID_GUID, "5a1d6732-ed96-414b-add3-f617275f5df0");
+        _payloads.put(Attr.CONTACT_ID_GUID, "ab453400-4596-40cd-a59d-d96156cea939");
+        _payloads.put(Attr.PARTNER_CASE_REFERENCES_ID_GUID, "f94754e4-fdfe-4369-9553-f198aa6f20e2");
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921007\","
-                                        + "\"IssueDescription\": \"20180921001 Testing\"," 
+                                        + "\"Title\": \"Case 20180921008\","
+                                        + "\"IssueDescription\": \"20180921008 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -321,7 +321,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 007\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 008\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
