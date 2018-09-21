@@ -216,13 +216,20 @@ public class Program {
      * Chains up several scenarios to illustrate a common usage.
      */
     private static void Demo(){
-        String newCaseNumber =              Scenario100_1a_CreateCase();
-        JSONObject newCaseJson =            Scenario100_2a_GetNewCase(newCaseNumber);
-        System.out.println(newCaseJson);
-        String partnerCaseReferenceIdGuid = Scenario100_2a_GetPartnerCaseReferenceIdGuidFromNewCase(newCaseJson);
-        JSONObject defaultCustomer =        Scenario100_2a_GetDefaultCustomerFromNewCase(newCaseJson);
-        System.out.println(defaultCustomer);
-        String defaultCustomerIdGuid =      Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(defaultCustomer);
+        try {
+            String newCaseNumber =              Scenario100_1a_CreateCase();
+                                                Thread.sleep(2000); // Give Case Exchange sufficient time buffer to persist new case after case creation
+            JSONObject newCaseJson =            Scenario100_2a_GetNewCase(newCaseNumber);
+            System.out.println(newCaseJson);
+            String partnerCaseReferenceIdGuid = Scenario100_2a_GetPartnerCaseReferenceIdGuidFromNewCase(newCaseJson);
+            JSONObject defaultCustomer =        Scenario100_2a_GetDefaultCustomerFromNewCase(newCaseJson);
+            System.out.println(defaultCustomer);
+            String defaultCustomerIdGuid =      Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(defaultCustomer);
+            String contactIdGuid =              Scenario100_2a_GetContactIdGuidByKeywordFromDefaultCustomer(defaultCustomer, "Doe");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n\n\n\n");
+        }
     }
 
     /**
@@ -288,6 +295,33 @@ public class Program {
      */
     private static String Scenario100_2a_GetDefaultCustomerIdGuidFromDefaultCustomer(JSONObject defaultCustomer){
         return defaultCustomer.getString("id");
+    }
+
+    /**
+     * <p>Parse Contact ID GUID by keyword from the default Customer json.
+     * 
+     * @param  defaultCustomer Customer JSON of the created case, assuming we will be dealing with single-Customer cases only, which is true for now.
+     * @param  keyword         string used to search for match among LastName, FirstName, Email, and Phone attributes of the Customer Contact.
+     * 
+     * @return  Contact ID GUID.
+     */
+    private static String Scenario100_2a_GetContactIdGuidByKeywordFromDefaultCustomer(JSONObject defaultCustomer, String keyword){
+        String upperCasedKeyword = keyword.toUpperCase();
+        JSONArray contacts = (JSONArray)defaultCustomer.getJSONArray("Contacts");
+
+        for (Iterator<Object> iterator = contacts.iterator(); iterator.hasNext();) {
+            JSONObject c = (JSONObject)iterator.next();
+
+            if(c.getString("LastName").toUpperCase().contains(upperCasedKeyword) 
+                || c.getString("FirstName").toUpperCase().contains(upperCasedKeyword) 
+                || c.getString("Email").toUpperCase().contains(upperCasedKeyword)
+                || c.getString("Phone").toUpperCase().contains(upperCasedKeyword)){
+                
+                return c.getString("id");
+            }
+        }
+
+        return "";
     }
 
     /**
@@ -381,8 +415,8 @@ public class Program {
         _payloads.put(Attr.CASE_PAYLOAD, "{\"SupportAreaPath\": \"32d322a8-acae-202d-e9a9-7371dccf381b\","
                                         + "\"Severity\": \"2\"," 
                                         + "\"CreationChannel\": \"Web\"," 
-                                        + "\"Title\": \"Case 20180921014\","
-                                        + "\"IssueDescription\": \"20180921014 Testing\"," 
+                                        + "\"Title\": \"Case 20180921018\","
+                                        + "\"IssueDescription\": \"20180921018 Testing\"," 
                                         + "\"SupportCountry\": \"US\","
                                         + "\"SupportLanguage\": \"en-US\","
                                         + "\"EntitlementInformation\": { \"EntitlementId\": \"U291cmNlOkZyZWUsRnJlZUlkOjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCxMb2NhbGU6ZW4tdXMs\"},"
@@ -401,7 +435,7 @@ public class Program {
                                                                                                           + "\"FirstName\": \"Cookiez\"," 
                                                                                                           + "\"Email\":\"GC@Yum.com\","
                                                                                                           + "\"Phone\": \"+1-425-882-8080\"},"
-                                                                            + "\"PartnerCaseId\": \"Partner 014\"}],"
+                                                                            + "\"PartnerCaseId\": \"Partner 018\"}],"
                                         + "\"Notes\": [{\"Content\": \"<div style='color: rgb(0, 0, 0); font-family: Calibri,Arial,Helvetica,sans-serif; font-size: 11pt;'>Test Note Template<br></div>\"}]}");
         _payloads.put(Attr.NOTE_PAYLOAD, "{\"Content\": \"Test @ " + DATE_FORMATTER.format(new Date()) + "\"}");
         _payloads.put(Attr.CONTACT_PAYLOAD, "{\"LastName\": \"Diamond\"," 
