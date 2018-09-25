@@ -1,7 +1,5 @@
 package com.contoso.caseapijavademo02.DO.Interfaces;
 
-public interface IPartnerCaseReference
+public interface IPartnerCaseReference extends IAttributeGroup
 {
-    void importFromJson(String input);
-    String outputToJson();
 }

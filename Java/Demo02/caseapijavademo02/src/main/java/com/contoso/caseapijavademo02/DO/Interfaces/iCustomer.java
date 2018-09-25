@@ -1,7 +1,5 @@
 package com.contoso.caseapijavademo02.DO.Interfaces;
 
-public interface ICustomer
+public interface ICustomer extends IAttributeGroup
 {
-    void importFromJson(String input);
-    String outputToJson();
 }

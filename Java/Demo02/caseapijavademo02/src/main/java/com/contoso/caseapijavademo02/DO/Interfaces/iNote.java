@@ -1,7 +1,5 @@
 package com.contoso.caseapijavademo02.DO.Interfaces;
 
-public interface INote 
+public interface INote extends IAttributeGroup
 {
-    void importFromJson(String input);
-    String outputToJson();
 }
