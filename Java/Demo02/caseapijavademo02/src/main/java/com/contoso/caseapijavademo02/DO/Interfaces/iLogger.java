@@ -1,6 +1,6 @@
 package com.contoso.caseapijavademo02.DO.Interfaces;
 
-public interface iLogger
+public interface ILogger
 {
     String filePath = "";
     void log();
