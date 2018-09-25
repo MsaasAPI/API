@@ -15,4 +15,8 @@ class Note implements INote
         return null;
     }
 
+    @Override
+    public boolean isUnpopulated() {
+        return false;
+    }
 } 
