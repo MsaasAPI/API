@@ -4,7 +4,7 @@ package com.contoso.caseapijavademo02;
  * Hello world!
  *
  */
-public class App 
+public class Program 
 {
     public static void main( String[] args )
     {
