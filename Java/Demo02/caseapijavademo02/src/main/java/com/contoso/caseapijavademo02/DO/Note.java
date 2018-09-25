@@ -4,6 +4,7 @@ import com.contoso.caseapijavademo02.DO.Interfaces.INote;
 
 class Note implements INote
 {
+    String noteContent = "";
 
     @Override
     public void importFromJson(String input) {
@@ -17,6 +18,16 @@ class Note implements INote
 
     @Override
     public boolean isUnpopulated() {
-        return false;
+        return this.noteContent.trim().isEmpty();
+    }
+
+    @Override
+    public void setNote(String noteInput) {
+        this.noteContent = noteInput;
+    }
+
+    @Override
+    public String getNote() {
+        return null;
     }
 } 
