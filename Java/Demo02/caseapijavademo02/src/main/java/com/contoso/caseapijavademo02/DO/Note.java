@@ -8,7 +8,7 @@ public class Note implements INote
 {
     Gson gson;
 
-    @Expose @SerializedName("Content") String content = ""; // Only field to be serialized into JSON
+    @Expose @SerializedName("Content") private String content = ""; // Only field to be serialized into JSON
 
     public Note() {
         super();
@@ -25,21 +25,21 @@ public class Note implements INote
 
     @Override
     public String outputToJson() {
-        return gson.toJson(this.content);
+        return gson.toJson(content);
     }
 
     @Override
     public boolean isUnpopulated() {
-        return this.content.trim().isEmpty();
+        return content.trim().isEmpty();
     }
 
     @Override
     public void setNote(String noteInput) {
-        this.content = noteInput;
+        content = noteInput;
     }
 
     @Override
     public String getNote() {
-        return this.content;
+        return content;
     }
 } 
