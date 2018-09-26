@@ -7,7 +7,10 @@ import com.google.gson.annotations.*;
 public class Note implements INote
 {
     Gson gson;
-    @Expose String content = ""; // Only field to be serialized into JSON
+
+    @Expose 
+    @SerializedName("Content")
+    String content = ""; // Only field to be serialized into JSON
 
     public Note() {
         super();
