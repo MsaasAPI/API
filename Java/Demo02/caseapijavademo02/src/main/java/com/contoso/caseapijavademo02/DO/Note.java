@@ -2,40 +2,43 @@ package com.contoso.caseapijavademo02.DO;
 
 import com.contoso.caseapijavademo02.DO.Interfaces.INote;
 import com.google.gson.*;
+import com.google.gson.annotations.*;
 
-class Note implements INote
+public class Note implements INote
 {
     Gson gson;
-    String noteContent = "";
+    @Expose public String content = ""; // Only field to be serialized into JSON
 
     public Note() {
         super();
-        GsonBuilder builder = new GsonBuilder();
-        gson = builder.create();
+
+        gson = new GsonBuilder()
+                    .excludeFieldsWithoutExposeAnnotation()
+                    .create();
     }
 
     @Override
     public void importFromJson(String input) {
-        this.noteContent = gson.fromJson(input, String.class);
+        content = gson.fromJson(input, String.class);
     }
 
     @Override
     public String outputToJson() {
-        return gson.toJson(this.noteContent);
+        return gson.toJson(this.content);
     }
 
     @Override
     public boolean isUnpopulated() {
-        return this.noteContent.trim().isEmpty();
+        return this.content.trim().isEmpty();
     }
 
     @Override
     public void setNote(String noteInput) {
-        this.noteContent = noteInput;
+        this.content = noteInput;
     }
 
     @Override
     public String getNote() {
-        return this.noteContent;
+        return this.content;
     }
 } 
