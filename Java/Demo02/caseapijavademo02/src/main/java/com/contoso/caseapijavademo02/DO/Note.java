@@ -18,6 +18,11 @@ public class Note implements INote
                     .create();
     }
 
+    public Note(String newContent) {
+        super();
+        content = newContent;
+    }
+
     @Override
     public void importFromJson(String input) {
         content = gson.fromJson(input, String.class);
@@ -34,8 +39,8 @@ public class Note implements INote
     }
 
     @Override
-    public void setNote(String noteInput) {
-        content = noteInput;
+    public void setNote(String newContent) {
+        content = newContent;
     }
 
     @Override
