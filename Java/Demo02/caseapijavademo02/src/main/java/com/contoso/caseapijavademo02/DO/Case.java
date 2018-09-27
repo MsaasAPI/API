@@ -31,6 +31,8 @@ public class Case implements ICase
         IPartnerCaseReference newPartnerCaseReference) {
         super();
 
+        customer = newCustomer;
+
         notes = new ArrayList<INote>();
         notes.add(newNote);
 
