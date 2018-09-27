@@ -25,6 +25,19 @@ public class Case implements ICase
         partnerCaseReferences = newPartnerCaseReferences;
     }
 
+    public Case(
+        ICustomer newCustomer, 
+        INote newNote, 
+        IPartnerCaseReference newPartnerCaseReference) {
+        super();
+
+        notes = new ArrayList<INote>();
+        notes.add(newNote);
+
+        partnerCaseReferences = new ArrayList<IPartnerCaseReference>();
+        partnerCaseReferences.add(newPartnerCaseReference);
+    }
+
     @Override
     public void importFromJson(String input) {
 
