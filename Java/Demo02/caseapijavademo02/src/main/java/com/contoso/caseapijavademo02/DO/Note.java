@@ -39,12 +39,12 @@ public class Note implements INote
     }
 
     @Override
-    public void setNote(String newContent) {
+    public void setContent(String newContent) {
         content = newContent;
     }
 
     @Override
-    public String getNote() {
+    public String getContent() {
         return content;
     }
 } 
