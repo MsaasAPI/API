@@ -1,5 +1,7 @@
 package com.contoso.caseapijavademo02.DO.Interfaces;
 
+import com.contoso.caseapijavademo02.DO.ContactChannel;
+
 public interface IContact extends IEntityBase
 {
     void setLastName(String newLastName);
@@ -14,8 +16,8 @@ public interface IContact extends IEntityBase
     void setPhone(String newPhone);
     String getPhone();
 
-    void setPreferredContactChannel(String newPreference);
-    String getPreferredContactChannel();
+    void setPreferredContactChannel(IContactChannel newPreference);
+    IContactChannel getPreferredContactChannel();
 
     void setAsPrimaryContact();
     boolean isPrimaryContact();

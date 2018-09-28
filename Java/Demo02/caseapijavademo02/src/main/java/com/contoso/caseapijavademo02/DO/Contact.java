@@ -1,6 +1,6 @@
 package com.contoso.caseapijavademo02.DO;
 
-import com.contoso.caseapijavademo02.DO.Interfaces.IContact;
+import com.contoso.caseapijavademo02.DO.Interfaces.*;
 import com.google.gson.*;
 import com.google.gson.annotations.*;
 
@@ -12,19 +12,15 @@ public class Contact implements IContact
     @Expose @SerializedName("LastName") private String lastName = "";
     @Expose @SerializedName("Email") private String email = "";
     @Expose @SerializedName("Phone") private String phone = "";
-    @Expose @SerializedName("PreferredContactChannel") private String preferredContactChannel = "";
+    @Expose @SerializedName("PreferredContactChannel") private IContactChannel preferredContactChannel;
     @Expose @SerializedName("IsPrimaryContact") private boolean isPrimaryContact = false;
     
-    public Contact() {
-        super();
-    }
-
     public Contact(
             String newFirstName, 
             String newLastName,
             String newEmail,
             String newPhone,
-            String newPreferredContactChannel,
+            IContactChannel newPreferredContactChannel,
             boolean newIsPrimaryContact) {
         super();
 
@@ -51,8 +47,7 @@ public class Contact implements IContact
         return lastName.trim().isEmpty() 
             && firstName.trim().isEmpty() 
             && email.trim().isEmpty() 
-            && phone.trim().isEmpty()
-            && preferredContactChannel.trim().isEmpty();
+            && phone.trim().isEmpty();
     }
 
     @Override
@@ -96,12 +91,12 @@ public class Contact implements IContact
     }
 
     @Override
-    public void setPreferredContactChannel(String newPreference) {
+    public void setPreferredContactChannel(IContactChannel newPreference) {
         preferredContactChannel = newPreference;
     }
 
     @Override
-    public String getPreferredContactChannel() {
+    public IContactChannel getPreferredContactChannel() {
         return preferredContactChannel;
     }
 

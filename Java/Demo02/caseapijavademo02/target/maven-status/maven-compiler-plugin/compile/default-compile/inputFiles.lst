@@ -2,6 +2,7 @@ C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Interfaces\IPartnerAgentInformation.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Interfaces\IPartnerCaseReference.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Customer.java
+C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\ContactChannel.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Case.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Logger.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Interfaces\ICustomer.java
@@ -10,6 +11,7 @@ C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Interfaces\ICase.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Interfaces\ILogger.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\PartnerAgentInformation.java
+C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Interfaces\IContactBuilder.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\PartnerCaseReference.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\DO\Note.java
 C:\Users\v-juili\OneDrive - Microsoft\Projects\API\Java\Demo02\caseapijavademo02\src\main\java\com\contoso\caseapijavademo02\Program.java
