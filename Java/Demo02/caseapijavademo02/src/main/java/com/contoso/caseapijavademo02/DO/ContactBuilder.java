@@ -9,7 +9,18 @@ public class ContactBuilder implements IContactBuilder
     private String email;
     private String phone;
     private IContactChannel preferredContactChannel;
-    private boolean isPrimaryContact = false;
+    private boolean isPrimaryContact;
+
+    public ContactBuilder() {
+        super();
+
+        lastName = "";
+        firstName = "";
+        email = "";
+        phone = "";
+        preferredContactChannel = ContactChannel.NONE;
+        isPrimaryContact = false;
+    }
 
     @Override
     public IContactBuilder CreateContactOfLastName(String newLastName) {
