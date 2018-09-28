@@ -14,8 +14,9 @@ public class Contact implements IContact
     @Expose @SerializedName("Phone") private String phone = "";
     @Expose @SerializedName("PreferredContactChannel") private IContactChannel preferredContactChannel;
     @Expose @SerializedName("IsPrimaryContact") private boolean isPrimaryContact = false;
-    
-    public Contact(
+ 
+    // Purposely provision a package-private constructor (and this is the only constructor) so that only FluentBuilder under the same package can invoke this constructor.
+    Contact(
             String newFirstName, 
             String newLastName,
             String newEmail,
