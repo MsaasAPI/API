@@ -12,19 +12,10 @@ public class Customer implements ICustomer
 
     @Expose @SerializedName("Contacts") private List<IContact> contacts;
     
-    public Customer() {
-        super();
-    }
-
-    public Customer(List<IContact> newContacts) {
+    // Purposely provision a package-private constructor (and this is the only constructor) so that only FluentBuilder under the same package can invoke this constructor.
+    Customer(List<IContact> newContacts) {
         super();
         contacts = newContacts;
-    }
-
-    public Customer(IContact newContact) {
-        super();
-        contacts = new ArrayList<IContact>();
-        contacts.add(newContact);
     }
 
     @Override
