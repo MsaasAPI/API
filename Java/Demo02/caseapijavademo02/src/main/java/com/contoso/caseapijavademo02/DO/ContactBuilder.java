@@ -13,13 +13,7 @@ public class ContactBuilder implements IContactBuilder
 
     public ContactBuilder() {
         super();
-
-        lastName = "";
-        firstName = "";
-        email = "";
-        phone = "";
-        preferredContactChannel = ContactChannel.NONE;
-        isPrimaryContact = false;
+        resetFields();
     }
 
     @Override
@@ -60,6 +54,17 @@ public class ContactBuilder implements IContactBuilder
 
     @Override
     public IEntityBase Build() {
-        return new Contact(firstName, lastName, email, phone, preferredContactChannel, isPrimaryContact);
+        IContact contact = new Contact(firstName, lastName, email, phone, preferredContactChannel, isPrimaryContact);
+        resetFields();
+        return contact;
+    }
+
+    private void resetFields(){
+        lastName = "";
+        firstName = "";
+        email = "";
+        phone = "";
+        preferredContactChannel = ContactChannel.NONE;
+        isPrimaryContact = false;
     }
 }
