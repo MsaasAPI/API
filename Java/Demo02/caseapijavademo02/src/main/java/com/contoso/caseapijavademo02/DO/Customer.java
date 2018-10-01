@@ -11,6 +11,10 @@ public class Customer implements ICustomer
     Gson gson;
 
     @Expose @SerializedName("Contacts") private List<IContact> contacts;
+
+    public Customer() {
+        super();
+    }
     
     // Purposely provision a package-private constructor (and this is the only constructor) so that only FluentBuilder under the same package can invoke this constructor.
     Customer(List<IContact> newContacts) {

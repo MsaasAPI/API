@@ -1,16 +1,5 @@
 package com.contoso.caseapijavademo02.DO.Interfaces;
 
-public interface IPartnerAgentInformation extends IEntityBase
+public interface IPartnerAgentInformation extends IPersonProfile
 {
-    void setLastName(String newLastName);
-    String getLastName();
-
-    void setFirstName(String newFirstName);
-    String getFirstName();
-
-    void setEmail(String newEmail);
-    String getEmail();
-
-    void setPhone(String newPhone);
-    String getPhone();
 }

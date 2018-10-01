@@ -6,7 +6,7 @@ import com.contoso.caseapijavademo02.DO.Interfaces.*;
 
 public class CaseBuilder implements ICaseBuilder 
 {
-    private IEntityType currentEntity;
+    private IEntityBase currentEntity;
     private List<IContact> contacts;
     private List<INote> notes;
     private IContact contact;
@@ -31,57 +31,34 @@ public class CaseBuilder implements ICaseBuilder
 
     @Override
     public ICaseBuilder CreateCaseOfTitle(String newTitle) {
-        currentEntity = EntityType.CASE;
+        currentEntity = new Case();
         caseTitle = newTitle;
         return this;
     }
 
     @Override
     public ICaseBuilder AddCustomer() {
-        currentEntity = EntityType.CUSTOMER;
-        return this;
-    }
-
-    @Override
-    public ICaseBuilder BuildThisCustomer() {
-        customer = new Customer(contacts);
+        currentEntity = new Customer();
         return this;
     }
 
     @Override
     public ICaseBuilder AddContactOfLastName(String newLastName) {
-        currentEntity = EntityType.CONTACT;
+        currentEntity = new Contact();
         contactLastName = newLastName;
         return this;
     }
 
     @Override
-    public ICaseBuilder BuildThisContact() {
-        contact = new Contact(contactFirstName, contactLastName, contactEmail, contactPhone, contactPreferredContactChannel, contactIsPrimaryContact);
-        return this;
-    }
-
-    @Override
     public ICaseBuilder AddPartnerCaseReferenceOfPartnerCaseId(String newPartnerCaseId) {
-        currentEntity = EntityType.PARTNER_CASE_REFERENCE;
-        return this;
-    }
-
-    @Override
-    public ICaseBuilder BuildThisPartnerCaseReference() {
+        currentEntity = new PartnerCaseReference();
         return this;
     }
 
     @Override
     public ICaseBuilder AddPartnerAgentInformationOfLastName(String newLastName) {
-        currentEntity = EntityType.PARTNER_AGENT_INFORMATION;
+        currentEntity = new PartnerAgentInformation();
         partnerAgentInformationLastName = newLastName;
-        return this;
-    }
-
-    @Override
-    public ICaseBuilder BuildThisPartnerAgentInformation() {
-        partnerAgentInformation = new PartnerAgentInformation(partnerAgentInformationFirstName, partnerAgentInformationLastName, partnerAgentInformationEmail, partnerAgentInformationPhone);
         return this;
     }
 
@@ -114,5 +91,25 @@ public class CaseBuilder implements ICaseBuilder
     public IEntityBase Build() {
         ICase theCase = new Case();
         return theCase;
+    }
+
+    @Override
+    public ICaseBuilder BuildThisCustomer() {
+        return null;
+    }
+
+    @Override
+    public ICaseBuilder BuildThisContact() {
+        return null;
+    }
+
+    @Override
+    public ICaseBuilder BuildThisPartnerCaseReference() {
+        return null;
+    }
+
+    @Override
+    public ICaseBuilder BuildThisPartnerAgentInformation() {
+        return null;
     }
 }
