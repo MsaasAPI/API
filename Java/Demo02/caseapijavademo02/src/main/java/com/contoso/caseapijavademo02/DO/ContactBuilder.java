@@ -23,25 +23,25 @@ public class ContactBuilder implements IContactBuilder
     }
 
     @Override
-    public IContactBuilder WithFirstName(String newFirstName) {
+    public IContactBuilder OfFirstName(String newFirstName) {
         firstName = newFirstName;
         return this;
     }
 
     @Override
-    public IContactBuilder WithEmail(String newEmail) {
+    public IContactBuilder OfEmail(String newEmail) {
         email = newEmail;
         return this;
     }
 
     @Override
-    public IContactBuilder WithPhone(String newPhone) {
+    public IContactBuilder OfPhone(String newPhone) {
         phone = newPhone;
         return this;
     }
 
     @Override
-    public IContactBuilder WithPreferredContactChannelToBe(IContactChannel newPreferredContactChannel) {
+    public IContactBuilder OfPreferredContactChannel(IContactChannel newPreferredContactChannel) {
         preferredContactChannel = newPreferredContactChannel;
         return this;
     }
