@@ -3,6 +3,9 @@ package com.contoso.caseapijavademo02.DO.Builders.Interfaces;
 import java.util.UUID;
 import com.contoso.caseapijavademo02.DO.CaseAttributes.Interfaces.*;
 
+/**
+ * Contact for builder to instantiate Contact in fluent manner.
+ */
 public interface IContactBuilder extends IEntityBuilder
 {
     IContactBuilder addLastName(String partnerAgentLastName);

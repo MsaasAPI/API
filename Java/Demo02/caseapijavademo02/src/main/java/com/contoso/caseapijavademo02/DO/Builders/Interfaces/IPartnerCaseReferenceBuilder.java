@@ -3,6 +3,11 @@ package com.contoso.caseapijavademo02.DO.Builders.Interfaces;
 import java.util.UUID;
 import com.contoso.caseapijavademo02.DO.CaseAttributes.Interfaces.IPartnerCaseReference;
 
+/**
+ * Contact for builder to instantiate PartnerCaseReference in fluent manner.
+ * 
+ * Populate fields for PartnerAgentInformation here since it's not entity.
+ */
 public interface IPartnerCaseReferenceBuilder extends IEntityBuilder
 {
     IPartnerCaseReferenceBuilder addPartnerCaseState(String partnerCaseState);

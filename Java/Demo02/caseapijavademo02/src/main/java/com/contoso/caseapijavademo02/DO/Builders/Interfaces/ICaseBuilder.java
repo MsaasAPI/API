@@ -2,6 +2,9 @@ package com.contoso.caseapijavademo02.DO.Builders.Interfaces;
 
 import com.contoso.caseapijavademo02.DO.CaseAttributes.Interfaces.*;
 
+/**
+ * Contact for builder to instantiate Case in fluent manner.
+ */
 public interface ICaseBuilder extends IEntityBuilder
 {
     ICaseBuilder addCustomer(ICustomer customer);
