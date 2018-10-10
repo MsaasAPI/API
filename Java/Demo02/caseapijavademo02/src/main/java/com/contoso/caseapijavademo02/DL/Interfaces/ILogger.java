@@ -5,7 +5,7 @@ package com.contoso.caseapijavademo02.DL.Interfaces;
  */
 public interface ILogger extends IRepositoryAccessor
 {
-    ILogger upsert(String item);
+    ILogger log(String item);
     ILogger as(String entryName);
     ILogger at(String path);
     void execute();
