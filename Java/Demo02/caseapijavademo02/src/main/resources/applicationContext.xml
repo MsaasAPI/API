@@ -9,19 +9,4 @@
                         
     <context:property-placeholder location="app.properties" />
 
-    <bean name="scenarioRunner"
-        class="com.contoso.caseapijavademo02.BL.ScenarioRunner">
-        <constructor-arg index="0" ref="blHelper" />
-    </bean>
-
-    <bean name="blHelper"
-        class="com.contoso.caseapijavademo02.BL.BlHelper">
-        <property name="authority" value="${authority}" />
-        <property name="baseUri" value="${baseUri}" />
-        <property name="clientIdForCertificate" value="${clientIdForCertificate}" />
-        <property name="keyStoreCertificateAlias" value="${keyStoreCertificateAlias}" />
-        <property name="keyStoreName" value="${keyStoreName}" />
-        <property name="keyStorePassword" value="${keyStorePassword}" />
-        <property name="resource" value="${resource}" />
-    </bean>
 </beans>
