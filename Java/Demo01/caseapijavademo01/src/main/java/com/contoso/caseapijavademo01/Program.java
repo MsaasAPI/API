@@ -22,20 +22,20 @@ import org.json.*;
  */
 public class Program {
     /***** USER CONFIGURABLE FIELDS *****/
-    private static final String PARTNER_NAME = "CONTOSO";
+    private static final String PARTNER_NAME = "";
     private static final String LOG_FOLDER = "Logs/";
     private static final Integer MAX_RETRIES = 3;
     
     /***** CREDENTIALS *****/
-    private static final String CLIENT_ID_CERT = "c6bee0f5-1a60-4d25-8629-b0bdd8e4ce2e";
-    private static final String AUTHORITY = "https://login.microsoftonline.com/keystonemseg.onmicrosoft.com";
-    private static final String RESOURCE = "https://api-ppe.support.microsoft.com";
-    private static final String KEY_STORE_NAME = "C:\\Program Files\\Java\\jre-10.0.2\\bin\\AadKeyStore01.jks";
-    private static final String ALIAS_IN_KEY_STORE = "te-55a00fe8-7011-411a-b2cc-c935edcf59c1";
-    private static final String KEY_STORE_PASSWORD = "CaseExchange!+";
+    private static final String CLIENT_ID_CERT = "";
+    private static final String AUTHORITY = "";
+    private static final String RESOURCE = "";
+    private static final String KEY_STORE_NAME = "";
+    private static final String ALIAS_IN_KEY_STORE = "";
+    private static final String KEY_STORE_PASSWORD = "";
     
     /***** OTHER CONSTANTS & STATIC FIELDS *****/
-    private static final String BASE_URI = "https://api-ppe.support.microsoft.com/v1/cases";
+    private static final String BASE_URI = "";
     private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy_MMdd_HHmm");
     private static final String LOG_NAME = "log_" + DATE_FORMATTER.format(new Date()) + ".txt";
     private static final Integer TIME_DELAY = 1000;
@@ -70,10 +70,10 @@ public class Program {
         // Run(Api.SCENARIO190_CLOSE_CASE, _payloads.get(Attr.CASE_NUMBER), _payloads.get(Attr.PARTNER_CASE_REFERENCES_ID_GUID), _payloads.get(Attr.PARTNER_CASE_REFERENCES_CASE_STATE_CLOSURE_PAYLOAD)); 
 
         // //--Scenario 200 Partner gets a case
-        // Run(Api.SCENARIO200_GET_CASE, _payloads.get(Attr.CASE_NUMBER)); 
+        Run(Api.SCENARIO200_GET_CASE, _payloads.get(Attr.CASE_NUMBER)); 
 
         //--Demo
-        Run(Api.DEMO, "");
+        // Run(Api.DEMO, "");
         System.exit(0);
     }
 
